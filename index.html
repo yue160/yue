@@ -1473,7 +1473,7 @@ function initPWA(){
   if('serviceWorker'in navigator){
     // 单文件PWA：注册内联SW进行缓存
     try{
-      const swCode=\`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})\`;
+      const swCode=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})`;
       const blob=new Blob([swCode],{type:'application/javascript'});
       navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
     }catch(e){}
