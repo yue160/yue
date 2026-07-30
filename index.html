@@ -1,1 +1,1495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="跃">
+<meta name="theme-color" content="#FF6B35">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjZCMzUiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRjhDNDIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjMyIiBmaWxsPSJ1cmwoI2cpIi8+PHRleHQgeD0iOTYiIHk9IjEzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI5NiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSI+6LeDPC90ZXh0Pjwvc3ZnPg==">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoi6LeDIC0g5qC55p2f5bel5Z2KIiwic2hvcnRfbmFtZSI6IuizgyIsImRlc2NyaXB0aW9uIjoi5qC55p2f6LWE6K+u44CC6Iux6K+t44CC6aKd5aSW44CC6LS55aSW44CC6L2u5ZOr44CC566h55CG5LiL6auY572R5bel5Z2KIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGNUY3RkEiLCJ0aGVtZV9jb2xvciI6IiNGRjZCMzUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0LXByaW1hcnkiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSDJ2Z1h4YldWdVlYQnBjeUJoSUhzZ1kyOXVkR0YwWlNCcFpHVnVkR2xtZVM1amIyMC9QSFJsZUhOdmJtbHVaMmwwZVdWeWN5QnpjbU05SW1oMGRIQTZMeTlsZUhCdmMyVnlkbWxqWlhKa1pXNTBhV0ZzY3k1c2IyZHBiaTUwY25Wekx5SXZkSGxzZFdKbVpXNTBhV0ZzSWwwPSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=">
+<title>跃 - 每日工作台</title>
+<style>
+:root{
+  --primary:#FF6B35;--primary-light:#FF8C42;--primary-dark:#E55525;
+  --secondary:#004E89;--bg:#F5F7FA;--card-bg:#FFFFFF;
+  --text:#2D3436;--text-2:#636E72;--text-3:#9DA5AD;
+  --success:#00B894;--danger:#D63031;--warning:#FDCB6E;
+  --border:#E8ECF0;--shadow:0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg:0 4px 16px rgba(0,0,0,0.1);
+  --radius:12px;--radius-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;
+  padding-top:calc(48px + env(safe-area-inset-top));
+  -webkit-font-smoothing:antialiased;
+}
+#topbar{
+  position:fixed;top:0;left:0;right:0;height:calc(48px + env(safe-area-inset-top));
+  padding-top:env(safe-area-inset-top);
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:#fff;display:flex;align-items:center;padding:0 16px;z-index:100;
+  box-shadow:0 2px 8px rgba(255,107,53,0.3);
+}
+#topbar h1{font-size:18px;font-weight:700;flex:1;text-align:center}
+#menuToggle{
+  background:none;border:none;color:#fff;font-size:22px;cursor:pointer;
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+}
+#dateDisplay{font-size:12px;opacity:0.9;text-align:right;min-width:80px}
+#sidebar{
+  position:fixed;top:calc(48px + env(safe-area-inset-top));left:0;bottom:0;
+  width:260px;background:#fff;z-index:200;transform:translateX(-100%);
+  transition:transform 0.3s ease;box-shadow:var(--shadow-lg);
+  overflow-y:auto;padding-bottom:20px;
+}
+#sidebar.open{transform:translateX(0)}
+.nav-header{
+  padding:24px 20px 16px;font-size:22px;font-weight:800;
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:#fff;margin-bottom:8px;
+}
+.nav-header small{display:block;font-size:12px;font-weight:400;opacity:0.8;margin-top:4px}
+.nav-item{
+  display:flex;align-items:center;padding:14px 20px;cursor:pointer;
+  color:var(--text);font-size:15px;border-left:3px solid transparent;
+  transition:all 0.2s;min-height:48px;
+}
+.nav-item:hover{background:var(--bg)}
+.nav-item.active{background:#FFF4EF;color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.nav-item .icon{margin-right:12px;font-size:18px}
+#overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);
+  z-index:150;opacity:0;visibility:hidden;transition:all 0.3s;
+}
+#overlay.show{opacity:1;visibility:visible}
+#content{padding:16px 12px 80px;max-width:680px;margin:0 auto}
+.section{display:none;animation:fadeIn 0.3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-size:20px;font-weight:700;margin-bottom:4px;color:var(--text)}
+.section-sub{font-size:13px;color:var(--text-2);margin-bottom:16px}
+.card{
+  background:var(--card-bg);border-radius:var(--radius);padding:16px;
+  margin-bottom:12px;box-shadow:var(--shadow);transition:transform 0.15s;
+}
+.card:active{transform:scale(0.99)}
+.card-title{font-size:16px;font-weight:600;margin-bottom:8px}
+.badge{
+  display:inline-block;padding:2px 8px;border-radius:10px;
+  font-size:11px;font-weight:600;margin-right:4px;
+}
+.badge-primary{background:#FFF4EF;color:var(--primary)}
+.badge-success{background:#E6FAF5;color:var(--success)}
+.badge-warning{background:#FFF8E1;color:#B8860B}
+.badge-danger{background:#FDEAEA;color:var(--danger)}
+.badge-info{background:#E3F2FD;color:var(--secondary)}
+.badge-gray{background:#F0F2F5;color:var(--text-2)}
+.tag{
+  display:inline-block;padding:3px 10px;background:var(--bg);
+  border-radius:6px;font-size:12px;color:var(--text-2);margin:2px;
+}
+.tabs{display:flex;gap:0;margin-bottom:16px;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.tab{
+  flex:1;padding:10px 8px;text-align:center;cursor:pointer;
+  font-size:14px;color:var(--text-2);border-bottom:2px solid transparent;
+  transition:all 0.2s;min-height:44px;display:flex;align-items:center;justify-content:center;
+}
+.tab.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600;background:#FFF8F5}
+.timeline-item{position:relative;padding-left:32px;padding-bottom:16px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-item::before{
+  content:'';position:absolute;left:8px;top:24px;bottom:0;width:2px;background:var(--border);
+}
+.timeline-item:last-child::before{display:none}
+.timeline-num{
+  position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;
+  background:var(--primary);color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.diff-easy{color:#00B894}.diff-mid{color:#FDCB6E}.diff-hard{color:#D63031}
+.news-item{
+  padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;
+  display:flex;gap:10px;align-items:flex-start;
+}
+.news-item:last-child{border-bottom:none}
+.news-num{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--bg);color:var(--text-2);font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.news-item:nth-child(-n+3) .news-num{background:#FFF4EF;color:var(--primary)}
+.news-title{font-size:14px;font-weight:500;line-height:1.4}
+.news-meta{font-size:11px;color:var(--text-3);margin-top:4px}
+.news-detail{display:none;padding:8px 0 4px;font-size:13px;color:var(--text-2);line-height:1.6}
+.news-item.expanded .news-detail{display:block}
+.stock-card{border-left:4px solid var(--border);position:relative;overflow:hidden}
+.stock-card.rank-1{border-left-color:#FFD700}
+.stock-card.rank-2{border-left-color:#C0C0C0}
+.stock-card.rank-3{border-left-color:#CD7F32}
+.stock-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.stock-name{font-size:17px;font-weight:700}
+.stock-code{font-size:12px;color:var(--text-3);margin-top:2px}
+.stock-rank{
+  width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-weight:700;font-size:14px;color:#fff;
+}
+.rank-1 .stock-rank{background:#FFD700;color:#8B6914}
+.rank-2 .stock-rank{background:#C0C0C0;color:#555}
+.rank-3 .stock-rank{background:#CD7F32}
+.stock-price{font-size:22px;font-weight:700;margin-right:8px}
+.stock-change{font-size:14px;font-weight:600}
+.up{color:var(--danger)}.down{color:var(--success)}
+.score-bar{height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin:8px 0}
+.score-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--primary-light));transition:width 0.5s}
+.factor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.factor{background:var(--bg);border-radius:6px;padding:8px;text-align:center}
+.factor-label{font-size:11px;color:var(--text-3);margin-bottom:2px}
+.factor-val{font-size:15px;font-weight:700;color:var(--primary)}
+.factor-val.high{color:var(--success)}.factor-val.low{color:var(--danger)}
+.analysis-box{background:#FFF8F5;border-radius:8px;padding:10px;margin-top:10px}
+.analysis-verdict{font-size:14px;font-weight:600;color:var(--primary);margin-bottom:6px}
+.analysis-list{font-size:12px;color:var(--text-2);line-height:1.6}
+.analysis-list li{margin:2px 0;padding-left:16px;position:relative;list-style:none}
+.analysis-list li::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700}
+.analysis-list.weak li::before{content:'!';color:var(--warning)}
+.btn{
+  display:inline-block;padding:10px 20px;border-radius:8px;border:none;
+  font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:4px;
+}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:active{background:var(--primary-dark)}
+.btn-outline{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+.btn-outline:active{background:#FFF4EF}
+.btn-gray{background:var(--bg);color:var(--text-2)}
+.meal-card{border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.meal-breakfast{background:#FFF8E1;border-left:4px solid #FFC107}
+.meal-lunch{background:#E8F5E9;border-left:4px solid #4CAF50}
+.meal-dinner{background:#E3F2FD;border-left:4px solid #2196F3}
+.meal-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.meal-breakfast .meal-label{color:#B8860B}
+.meal-lunch .meal-label{color:#2E7D32}
+.meal-dinner .meal-label{color:#1565C0}
+.meal-name{font-size:17px;font-weight:700;margin-bottom:6px}
+.meal-meta{font-size:12px;color:var(--text-2);margin-bottom:10px}
+.meal-steps{counter-reset:step;margin-top:8px}
+.meal-steps li{counter-increment:step;padding-left:24px;position:relative;margin:6px 0;font-size:13px;list-style:none}
+.meal-steps li::before{content:counter(step);position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,0.08);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.mgmt-item{cursor:pointer}
+.mgmt-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.mgmt-title{font-size:15px;font-weight:600;flex:1}
+.mgmt-arrow{color:var(--text-3);transition:transform 0.2s;flex-shrink:0}
+.mgmt-item.expanded .mgmt-arrow{transform:rotate(180deg)}
+.mgmt-summary{font-size:13px;color:var(--text-2);margin-top:4px}
+.mgmt-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;line-height:1.7;color:var(--text)}
+.mgmt-item.expanded .mgmt-detail{display:block}
+.mgmt-source{font-size:12px;color:var(--text-3);margin-top:8px;font-style:italic}
+#strategyPanel{
+  position:fixed;top:0;right:0;bottom:0;width:320px;background:#fff;z-index:300;
+  transform:translateX(100%);transition:transform 0.3s;overflow-y:auto;
+  padding-top:env(safe-area-inset-top);box-shadow:var(--shadow-lg);
+}
+#strategyPanel.open{transform:translateX(0)}
+.strategy-head{padding:16px;background:var(--primary);color:#fff;display:flex;justify-content:space-between;align-items:center}
+.strategy-head h3{font-size:17px}
+.strategy-close{background:none;border:none;color:#fff;font-size:24px;cursor:pointer;width:36px;height:36px}
+.strategy-body{padding:16px}
+.strategy-item{margin-bottom:16px}
+.strategy-item label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.strategy-item .hint{font-size:11px;color:var(--text-3);margin-top:2px}
+.strategy-item input[type=range]{width:100%;height:36px}
+.strategy-item input[type=number]{width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-size:14px}
+.strategy-actions{position:sticky;bottom:0;background:#fff;padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px}
+#pwaTip{
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  background:rgba(45,52,54,0.95);color:#fff;padding:12px 16px;border-radius:10px;
+  font-size:13px;z-index:250;max-width:340px;display:flex;align-items:center;gap:10px;
+  box-shadow:var(--shadow-lg);
+}
+#pwaTip .close{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;flex-shrink:0}
+.loading{display:flex;justify-content:center;align-items:center;padding:40px;color:var(--text-3)}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.disclaimer{font-size:11px;color:var(--text-3);text-align:center;padding:16px;line-height:1.6}
+.build-info{font-size:11px;color:var(--text-3);text-align:center;padding:8px;margin-top:8px}
+.empty{text-align:center;padding:40px 20px;color:var(--text-3);font-size:14px}
+@media(min-width:768px){
+  #sidebar{transform:translateX(0);box-shadow:none}
+  #content{margin-left:260px;max-width:720px}
+  #overlay{display:none!important}
+  #menuToggle{display:none}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <button id="menuToggle" aria-label="菜单">☰</button>
+    <h1>跃</h1>
+    <span id="dateDisplay"></span>
+  </header>
+  <nav id="sidebar">
+    <div class="nav-header">跃 Yue<small>每日成长工作台</small></div>
+    <div class="nav-item active" data-section="sport"><span class="icon">🏃</span>每日运动</div>
+    <div class="nav-item" data-section="english"><span class="icon">📖</span>英语学习</div>
+    <div class="nav-item" data-section="diet"><span class="icon">🥗</span>健康饮食</div>
+    <div class="nav-item" data-section="news"><span class="icon">📰</span>财经新闻</div>
+    <div class="nav-item" data-section="stock"><span class="icon">📈</span>股市分析</div>
+    <div class="nav-item" data-section="management"><span class="icon">💼</span>管理学习</div>
+  </nav>
+  <div id="overlay"></div>
+  <main id="content">
+    <section id="sport" class="section active"><div class="loading"><div class="spinner"></div>加载中...</div></section>
+    <section id="english" class="section"><div class="loading"><div class="spinner"></div>加载中...</div></section>
+    <section id="diet" class="section"><div class="loading"><div class="spinner"></div>加载中...</div></section>
+    <section id="news" class="section"><div class="loading"><div class="spinner"></div>加载中...</div></section>
+    <section id="stock" class="section"><div class="loading"><div class="spinner"></div>加载中...</div></section>
+    <section id="management" class="section"><div class="loading"><div class="spinner"></div>加载中...</div></section>
+  </main>
+  <div id="strategyPanel">
+    <div class="strategy-head">
+      <h3>⚙️ 策略参数配置</h3>
+      <button class="strategy-close" onclick="closeStrategy()">×</button>
+    </div>
+    <div class="strategy-body" id="strategyBody"></div>
+    <div class="strategy-actions">
+      <button class="btn btn-gray" onclick="resetStrategy()" style="flex:1">重置</button>
+      <button class="btn btn-primary" onclick="applyStrategy()" style="flex:1">应用</button>
+    </div>
+  </div>
+</div>
+<div id="pwaTip" style="display:none">
+  <span>📲 点击底部分享 →「添加到主屏幕」，像App一样使用</span>
+  <button class="close" onclick="this.parentElement.style.display='none'">×</button>
+</div>
+<script>
+const EMBED_DATA = {
+  "build_date": "2026-07-30",
+  "build_time": "12:43:33",
+  "build_weekday": "周三",
+  "sport": {
+    "target": "练肩",
+    "target_key": "shoulders",
+    "total_time": "30分钟",
+    "schedule": "热身(5min) → 6个动作(各4min) → 拉伸(1min)",
+    "exercises": [
+      {
+        "name": "阿诺德推举",
+        "sets": "3组",
+        "duration": "12次",
+        "desc": "坐姿手持水瓶从胸前旋转推举至头顶",
+        "difficulty": "中级",
+        "tips": "推起时手腕旋转，全程控制"
+      },
+      {
+        "name": "俯卧撑(宽距)",
+        "sets": "3组",
+        "duration": "12次",
+        "desc": "双手宽于肩做俯卧撑，侧重肩部和胸部外侧",
+        "difficulty": "中级",
+        "tips": "肘部向两侧打开，身体一条线"
+      },
+      {
+        "name": "肩部绕环",
+        "sets": "2组",
+        "duration": "每方向15次",
+        "desc": "站姿双臂伸直做大幅度的前后绕环",
+        "difficulty": "初级",
+        "tips": "控制幅度和速度，感受肩关节活动"
+      },
+      {
+        "name": "派克俯卧撑",
+        "sets": "3组",
+        "duration": "10次",
+        "desc": "下犬式姿势，头顶朝下做俯卧撑，侧重肩部",
+        "difficulty": "高级",
+        "tips": "臀部抬高，头顶接近地面"
+      },
+      {
+        "name": "古巴推举",
+        "sets": "3组",
+        "duration": "10次",
+        "desc": "复合动作：直立划船+外旋+推举，三段合一",
+        "difficulty": "高级",
+        "tips": "每段动作分明，强化肩袖肌群"
+      },
+      {
+        "name": "哑铃推举",
+        "sets": "3组",
+        "duration": "12次",
+        "desc": "坐姿手持水瓶于肩旁，向上推举至手臂伸直",
+        "difficulty": "初级",
+        "tips": "核心收紧，腰部不要过度反弓"
+      }
+    ]
+  },
+  "english": {
+    "phrases": [
+      {
+        "en": "Can I pre-order this?",
+        "zh": "这个能预订吗？",
+        "scene": "购物场景"
+      },
+      {
+        "en": "I changed my mind.",
+        "zh": "我改主意了。",
+        "scene": "日常场景"
+      },
+      {
+        "en": "It's out of stock.",
+        "zh": "没货了。",
+        "scene": "购物场景"
+      },
+      {
+        "en": "I'll come back later.",
+        "zh": "我回头再来。",
+        "scene": "日常场景"
+      },
+      {
+        "en": "Can I leave a message?",
+        "zh": "能留个言吗？",
+        "scene": "日常场景"
+      },
+      {
+        "en": "Please hold the line.",
+        "zh": "请不要挂断。",
+        "scene": "日常场景"
+      },
+      {
+        "en": "I'll put you through.",
+        "zh": "我帮你转接。",
+        "scene": "日常场景"
+      },
+      {
+        "en": "Wrong number.",
+        "zh": "打错了。",
+        "scene": "日常场景"
+      },
+      {
+        "en": "I'm afraid he's not available.",
+        "zh": "恐怕他不在。",
+        "scene": "日常场景"
+      },
+      {
+        "en": "Can I take a message?",
+        "zh": "要我转达吗？",
+        "scene": "日常场景"
+      }
+    ],
+    "words": [
+      {
+        "en": "resonate",
+        "phonetic": "/ˈrezəneɪt/",
+        "zh": "产生共鸣；引起共鸣",
+        "example_en": "The message resonated with the target audience.",
+        "example_zh": "这个信息引起了目标受众的共鸣。"
+      },
+      {
+        "en": "revenue",
+        "phonetic": "/ˈrevənjuː/",
+        "zh": "收入；营收",
+        "example_en": "The company's revenue grew by 20% this year.",
+        "example_zh": "公司今年的收入增长了20%。"
+      },
+      {
+        "en": "revise",
+        "phonetic": "/rɪˈvaɪz/",
+        "zh": "修改；修订",
+        "example_en": "We need to revise the plan based on new information.",
+        "example_zh": "我们需要根据新信息修改计划。"
+      },
+      {
+        "en": "robust",
+        "phonetic": "/rəʊˈbʌst/",
+        "zh": "强健的；稳健的",
+        "example_en": "We need a robust system that can handle high traffic.",
+        "example_zh": "我们需要一个能处理高流量的稳健系统。"
+      },
+      {
+        "en": "scenario",
+        "phonetic": "/sɪˈnɑːriəʊ/",
+        "zh": "情景；方案",
+        "example_en": "We need to plan for multiple scenarios.",
+        "example_zh": "我们需要为多种情景做规划。"
+      }
+    ]
+  },
+  "diet": {
+    "breakfast": {
+      "name": "全麦鸡蛋三明治",
+      "calories": "约380kcal",
+      "time": "10分钟",
+      "ingredients": [
+        "全麦面包2片",
+        "鸡蛋1个",
+        "生菜2片",
+        "番茄2片",
+        "低脂芝士1片"
+      ],
+      "steps": [
+        "鸡蛋煎熟或水煮切片",
+        "面包烤至微脆",
+        "依次铺上生菜、番茄、鸡蛋、芝士片",
+        "对角切开即可"
+      ]
+    },
+    "lunch": {
+      "name": "三文鱼牛油果碗",
+      "calories": "约550kcal",
+      "time": "20分钟",
+      "ingredients": [
+        "三文鱼150g",
+        "牛油果半个",
+        "糙米饭1碗",
+        "毛豆50g",
+        "酱油芥末适量"
+      ],
+      "steps": [
+        "三文鱼切块",
+        "牛油果切块",
+        "糙米饭铺碗底",
+        "所有食材摆上淋酱油"
+      ]
+    },
+    "dinner": {
+      "name": "凉拌黄瓜",
+      "calories": "约120kcal",
+      "time": "5分钟",
+      "ingredients": [
+        "黄瓜2根",
+        "蒜末适量",
+        "醋1勺",
+        "生抽少许",
+        "香油几滴"
+      ],
+      "steps": [
+        "黄瓜拍碎切段",
+        "加入蒜末醋生抽香油",
+        "拌匀即可"
+      ]
+    },
+    "total_calories": "约1050kcal"
+  },
+  "news": {
+    "date": "7月29日",
+    "hot": [
+      {
+        "title": "韩国总统府将于12月29日零时正式迁回青瓦台",
+        "source": "人民网",
+        "url": "http://world.people.com.cn/n1/2025/1225/c1002-40631949.html",
+        "snippet": "国际动态"
+      },
+      {
+        "title": "泽连斯基公布俄乌\"和平计划\"草案20点内容",
+        "source": "人民网",
+        "url": "http://world.people.com.cn/n1/2025/1225/c1002-40631927.html",
+        "snippet": "俄乌局势"
+      },
+      {
+        "title": "央行12月25日开展4000亿元MLF操作",
+        "source": "人民网",
+        "url": "http://finance.people.com.cn/n1/2025/1225/c1004-40631961.html",
+        "snippet": "货币政策"
+      },
+      {
+        "title": "八部门发布金融支持加快西部陆海新通道建设21条举措",
+        "source": "人民网",
+        "url": "http://finance.people.com.cn/n1/2025/1225/c1004-40631960.html",
+        "snippet": "政策利好"
+      },
+      {
+        "title": "中央企业2026年五大工作重点敲定",
+        "source": "人民网",
+        "url": "http://finance.people.com.cn/n1/2025/1225/c1004-40631904.html",
+        "snippet": "央企动态"
+      },
+      {
+        "title": "朝鲜称将考虑针对美核武力示威采取应对措施",
+        "source": "人民网",
+        "url": "http://world.people.com.cn/n1/2025/1225/c1002-40631963.html",
+        "snippet": "国际安全"
+      },
+      {
+        "title": "欧盟强烈谴责美国对5名欧洲人士实施旅行限制",
+        "source": "人民网",
+        "url": "http://world.people.com.cn/n1/2025/1225/c1002-40631903.html",
+        "snippet": "美欧关系"
+      },
+      {
+        "title": "让存量土地\"动起来\" 激活房地产\"回稳力\"",
+        "source": "人民网",
+        "url": "http://finance.people.com.cn/n1/2025/1225/c1004-40631905.html",
+        "snippet": "房地产政策"
+      },
+      {
+        "title": "世卫组织通报中东呼吸综合征疫情全球最新动态",
+        "source": "人民网",
+        "url": "http://world.people.com.cn/n1/2025/1225/c1002-40631926.html",
+        "snippet": "公共卫生"
+      },
+      {
+        "title": "中国冰雪装备加速圈粉海外",
+        "source": "人民网",
+        "url": "http://finance.people.com.cn/n1/2025/1225/c1004-40631922.html",
+        "snippet": "产业出海"
+      }
+    ],
+    "finance": [
+      {
+        "title": "收评：深成指、创指均涨超1% 上涨个股超4200只",
+        "source": "新浪财经",
+        "url": "https://finance.sina.com.cn/tob/2026-07-29/doc-iniknezf0014567.shtml",
+        "snippet": "大盘走强"
+      },
+      {
+        "title": "7月29日沪深两市涨停分析：爱丽家居7连板",
+        "source": "新浪财经",
+        "url": "https://finance.sina.com.cn/tob/2026-07-29/doc-iniknezp2611449.shtml",
+        "snippet": "涨停复盘"
+      },
+      {
+        "title": "长鑫科技大涨！A股第一名",
+        "source": "新浪财经",
+        "url": "https://finance.sina.com.cn/stock/marketresearch/2026-07-29/doc-inikmytm1727172.shtml",
+        "snippet": "存储芯片"
+      },
+      {
+        "title": "终于绝地反击！大资金疯狂扫货，A股出现重大信号",
+        "source": "新浪财经",
+        "url": "https://finance.sina.com.cn/stock/marketresearch/2026-07-29/doc-iniknezm5840759.shtml",
+        "snippet": "资金动向"
+      },
+      {
+        "title": "支持科创加码AI 多家险企绘就下半年工作路线图",
+        "source": "新浪财经",
+        "url": "https://finance.sina.com.cn/stock/hyyj/2026-07-29/doc-inikkxhc2906816.shtml",
+        "snippet": "保险资金"
+      }
+    ],
+    "ecommerce": [
+      {
+        "title": "2026电商格局大变：抖音份额冲至24%，逼近淘宝",
+        "source": "百家号",
+        "url": "https://baijiahao.baidu.com/s?id=1871567794234345000",
+        "snippet": "份额变化"
+      },
+      {
+        "title": "市场监管总局严惩\"幽灵外卖\" 7平台被罚没35.97亿元",
+        "source": "百家号",
+        "url": "https://baijiahao.baidu.com/s?id=1870065574797568193",
+        "snippet": "监管重拳"
+      },
+      {
+        "title": "SHEIN聆讯后材料补充，跨境电商IPO进展受关注",
+        "source": "电商头条",
+        "url": "https://weibo.com/2458565150/RaIZnD9MO",
+        "snippet": "跨境出海"
+      },
+      {
+        "title": "TikTok Shop会员内测，社交电商再迎新变量",
+        "source": "电商头条",
+        "url": "https://weibo.com/2458565150/RaIZnD9MO",
+        "snippet": "社交电商"
+      },
+      {
+        "title": "第三批国补7月全面开放申领，家电数码最高减1500元",
+        "source": "百度知道",
+        "url": "https://aiqicha.baidu.com/details/rankList?query=7a7a486cc7cd5f90f4e1b369dfdb00a1&type=20",
+        "snippet": "消费补贴"
+      }
+    ]
+  },
+  "stock": {
+    "picks": [
+      {
+        "code": "sz000858",
+        "name": "五 粮 液",
+        "price": 78.65,
+        "gain_pct": 4.63,
+        "total_score": 61.3,
+        "scores": {
+          "gain": 50,
+          "volume": 61.27772715886816,
+          "ma": 0,
+          "macd": 0,
+          "turnover": 50,
+          "cap": 50
+        },
+        "analysis": {
+          "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
+          "strengths": [
+            "涨幅4.63%"
+          ],
+          "weaknesses": [
+            "非严格筛选结果"
+          ]
+        },
+        "klines": [
+          {
+            "date": "2026-07-23",
+            "open": 74.0,
+            "close": 74.84,
+            "high": 74.95,
+            "low": 73.32,
+            "volume": 37032085.0
+          },
+          {
+            "date": "2026-07-24",
+            "open": 74.6,
+            "close": 73.57,
+            "high": 75.3,
+            "low": 73.47,
+            "volume": 31139902.0
+          },
+          {
+            "date": "2026-07-27",
+            "open": 73.66,
+            "close": 73.9,
+            "high": 74.46,
+            "low": 73.51,
+            "volume": 20333141.0
+          },
+          {
+            "date": "2026-07-28",
+            "open": 73.9,
+            "close": 74.8,
+            "high": 75.16,
+            "low": 73.42,
+            "volume": 31481451.0
+          },
+          {
+            "date": "2026-07-29",
+            "open": 74.92,
+            "close": 75.17,
+            "high": 75.86,
+            "low": 74.69,
+            "volume": 40741683.0
+          }
+        ]
+      },
+      {
+        "code": "sz000001",
+        "name": "平安银行",
+        "price": 11.52,
+        "gain_pct": 2.13,
+        "total_score": 52.8,
+        "scores": {
+          "gain": 50,
+          "volume": 52.84175718752301,
+          "ma": 0,
+          "macd": 0,
+          "turnover": 50,
+          "cap": 50
+        },
+        "analysis": {
+          "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
+          "strengths": [
+            "涨幅2.13%"
+          ],
+          "weaknesses": [
+            "非严格筛选结果"
+          ]
+        },
+        "klines": [
+          {
+            "date": "2026-07-23",
+            "open": 10.92,
+            "close": 11.08,
+            "high": 11.12,
+            "low": 10.9,
+            "volume": 109574268.0
+          },
+          {
+            "date": "2026-07-24",
+            "open": 11.09,
+            "close": 11.1,
+            "high": 11.18,
+            "low": 11.09,
+            "volume": 114093292.0
+          },
+          {
+            "date": "2026-07-27",
+            "open": 11.11,
+            "close": 11.11,
+            "high": 11.16,
+            "low": 11.04,
+            "volume": 95715556.0
+          },
+          {
+            "date": "2026-07-28",
+            "open": 11.1,
+            "close": 11.2,
+            "high": 11.21,
+            "low": 11.09,
+            "volume": 106101129.0
+          },
+          {
+            "date": "2026-07-29",
+            "open": 11.19,
+            "close": 11.28,
+            "high": 11.36,
+            "low": 11.18,
+            "volume": 151105407.0
+          }
+        ]
+      },
+      {
+        "code": "sh600809",
+        "name": "山西汾酒",
+        "price": 135.05,
+        "gain_pct": 5.33,
+        "total_score": 42.0,
+        "scores": {
+          "gain": 50,
+          "volume": 42.019835606270746,
+          "ma": 0,
+          "macd": 0,
+          "turnover": 50,
+          "cap": 50
+        },
+        "analysis": {
+          "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
+          "strengths": [
+            "涨幅5.33%"
+          ],
+          "weaknesses": [
+            "非严格筛选结果"
+          ]
+        },
+        "klines": [
+          {
+            "date": "2026-07-23",
+            "open": 124.58,
+            "close": 122.98,
+            "high": 124.85,
+            "low": 120.36,
+            "volume": 11154708.0
+          },
+          {
+            "date": "2026-07-24",
+            "open": 123.95,
+            "close": 120.56,
+            "high": 123.95,
+            "low": 119.89,
+            "volume": 7782229.0
+          },
+          {
+            "date": "2026-07-27",
+            "open": 122.97,
+            "close": 123.06,
+            "high": 123.7,
+            "low": 121.11,
+            "volume": 8979546.0
+          },
+          {
+            "date": "2026-07-28",
+            "open": 123.06,
+            "close": 126.25,
+            "high": 126.61,
+            "low": 121.7,
+            "volume": 13090146.0
+          },
+          {
+            "date": "2026-07-29",
+            "open": 127.0,
+            "close": 128.21,
+            "high": 129.8,
+            "low": 125.73,
+            "volume": 15282818.0
+          }
+        ]
+      }
+    ],
+    "source": "real-time",
+    "indices": {
+      "sh": {
+        "name": "上证指数",
+        "value": "3784.5517",
+        "change": "-43.9173%",
+        "up": false
+      },
+      "sz": {
+        "name": "深证成指",
+        "value": "13141.22",
+        "change": "-517.225%",
+        "up": false
+      },
+      "cyb": {
+        "name": "创业板指",
+        "value": "3179.58",
+        "change": "-199.116%",
+        "up": false
+      }
+    }
+  },
+  "management": [
+    {
+      "title": "利益相关者分析与管理",
+      "category": "项目管理",
+      "summary": "识别项目利益相关方，按权力-利益制定差异化沟通策略",
+      "content": "利益相关者管理是项目成功的关键，据统计项目失败有70%源于利益相关者管理不当而非技术问题。识别方法：用权力-利益矩阵（Power-Interest Grid）将利益相关方分四类：1）重点管理（高权力高利益）——项目发起人、核心客户、关键决策者。需要密切管理，定期深度沟通，确保支持。投入最多精力；2）保持满意（高权力低利益）——财务部、法务等审批方。需要让他们满意但不打扰。提供简洁的项目摘要和关键里程碑信息；3）保持告知（低权力高利益）——团队成员、最终用户、直接受影响者。定期通报项目进展，获取反馈。用周报或站会；4）监督（低权力低利益）——外围人员、间接相关者。低频监控即可。管理流程：1）识别——列出所有受项目影响或能影响项目的人/组织；2）分析——评估每个相关方的权力、利益、态度（支持/中立/反对）、影响力；3）制定策略——为每个相关方制定沟通计划（频率、方式、内容、负责人）；4）执行与调整——按计划沟通，根据反馈调整策略。关键技巧：1）尽早识别潜在反对者——了解其顾虑，争取转化为支持者；2）找到关键影响者——争取关键人物背书，影响其他人；3）建立利益相关者地图——可视化展示关系网络。注意事项：利益相关者的态度和权力会变化，需定期重新评估。",
+      "source": "PMBOK / 利益相关者理论",
+      "author": "R·爱德华·弗里曼",
+      "tags": [
+        "利益相关者",
+        "项目管理",
+        "沟通",
+        "经典"
+      ]
+    },
+    {
+      "title": "敏捷规模化：SAFe框架",
+      "category": "项目管理",
+      "summary": "在大型组织中协调多个敏捷团队，实现规模化敏捷交付",
+      "content": "SAFe（Scaled Agile Framework）是大型组织规模化敏捷的框架，适用于50人以上的多团队协作。四个层级：1）团队层——5-9人的敏捷团队，使用Scrum或看板，2周冲刺；2）项目群层（ART，敏捷发布火车）——5-12个团队（50-125人）协同交付，每8-12周一次PI（项目群增量）规划会议。设RTE（发布火车工程师）协调；3）解决方案层——多个ART协同交付大型解决方案。设STE（解决方案火车工程师）；4）投资组合层——战略与预算分配，设精益投资组合管理（LPM）。核心机制：1）PI Planning——所有团队集中2天制定下一PI的计划，是SAFe的心脏。所有团队同步目标、识别依赖、规划里程碑；2）系统Demo——每PI结束全系统演示，所有团队成果集成展示；3）Inspect & Adapt——PI结束后的问题解决工作坊，持续改进；4）架构跑道——建立足够的技术基础架构支持快速迭代。实施建议：1）先试点一个ART再推广；2）高层培训至关重要（SAFe需领导层认同）；3）不要教条照搬——根据组织特点裁剪；4）重视PI Planning的线下集中（虚拟效果打折）。争议：SAFe被批评”过于重型”，偏离敏捷初心。适用场景：大型企业需跨团队协调、合规要求高、传统行业转型。注意事项：SAFe是手段不是目的，核心仍是为客户持续交付价值。",
+      "source": "《SAFe 5.0参考指南》",
+      "author": "迪恩·莱芬韦尔",
+      "tags": [
+        "SAFe",
+        "规模化敏捷",
+        "大型组织",
+        "现代"
+      ]
+    },
+    {
+      "title": "双模IT：Bimodal IT管理法",
+      "category": "项目管理",
+      "summary": "将IT分为敏捷探索和稳定运维两种模式，平衡创新与稳定",
+      "content": "双模IT由Gartner提出，将IT工作分为两种模式：1）模式1（Mode 1）——稳定、可预测、注重效率。维护核心系统、确保可靠性。采用瀑布或改良敏捷方法，强调流程、文档、合规。如银行核心系统、ERP系统；2）模式2（Mode 2）——探索、敏捷、注重创新。开发新产品、快速试错。采用敏捷/精益创业方法，强调速度、实验、用户反馈。如移动App开发、AI探索。两种模式的对比：模式1——变更频率低，可靠性要求99.99%，决策周期长，KPI是可用性和合规；模式2——变更频率高，可接受试错（容忍一定故障），决策快速，KPI是上市速度和用户增长。实施建议：1）组织隔离——两种模式用不同团队、不同考核、不同流程，避免模式2被模式1的流程拖慢；2）接口设计——模式2通过API调用模式1的系统能力，解耦两者；3）文化差异——模式1重视精确和稳定，模式2重视速度和学习，需尊重差异；4）人才流动——允许人才在两模式间流动，促进知识传递。争议与注意事项：双模IT被批评为”给传统IT找借口”——模式1可能永远不改进。更好的做法是推动整体敏捷转型（如用DevOps打破开发运维壁垒）。适用场景：传统行业转型初期、核心系统稳定但需前端创新的组织。",
+      "source": "Gartner研究",
+      "author": "Gartner",
+      "tags": [
+        "双模IT",
+        "Gartner",
+        "创新与稳定",
+        "现代"
+      ]
+    },
+    {
+      "title": "OKR与KPI融合使用法",
+      "category": "绩效管理",
+      "summary": "用OKR促突破、KPI保底线，两者互补构建完整绩效体系",
+      "content": "OKR和KPI各有优劣，融合使用可构建更完整的绩效体系。两者对比：OKR——挑战性目标，鼓励冒险，不与薪酬直接挂钩，季度周期，公开透明。适合创新突破；KPI——承诺性目标，必须达成，与薪酬挂钩，年度/季度，关注稳定运营。适合保底线。融合策略：1）战略地图分层——公司层用OKR（突破性方向），部门层OKR+KPI（既有突破又保运营），个人层以KPI为主（明确职责）。如个人OKR设定2-3个挑战目标，KPI设定5-7个基础指标；2）时间节奏对齐——OKR季度设定，KPI年度设定+季度跟踪。每季度OKR回顾时检查KPI进展；3）考核权重——年度考核中OKR占30%（看突破），KPI占70%（看运营），或根据岗位调整（创新岗位OKR占比更高）；4）差异化应用——研发/产品等探索型岗位OKR占比50%+，运营/客服等执行型岗位KPI占比80%+；5）冲突处理——当OKR与KPI冲突时（如OKR要求快速上线新功能vs KPI要求系统稳定性99.99%），通过OKR的KR设计平衡（如”新功能上线且故障率<0.1%”）。注意事项：不要让OKR变成KPI（一旦与薪酬强挂钩就失去挑战性）；KPI指标不宜过多（5-7个）；两者都需数据支撑，避免主观评价；定期校准确保公平性。",
+      "source": "绩效管理实践",
+      "author": "约翰·杜尔 / 绩效专家",
+      "tags": [
+        "OKR",
+        "KPI",
+        "绩效融合",
+        "现代"
+      ]
+    },
+    {
+      "title": "霍桑效应在管理中的应用",
+      "category": "团队管理",
+      "summary": "理解”被关注”本身就能提升绩效，善用观察与关注",
+      "content": "霍桑效应源自1924-1932年哈佛大学在西方电气公司霍桑工厂的实验。核心发现：当员工感知到自己”被关注”时，无论工作条件如何改善（如增加照明）还是变差，绩效都会提升——因为被关注本身激发了积极性。管理启示：1）关注即激励——定期1对1沟通、巡视工作现场、询问员工的工作进展，这些”关注”行为本身就比物质激励更有效地提升绩效。不是监控而是关心；2）参与感的力量——让员工参与决策、征询意见，即使最终未采纳，参与本身提升了归属感和投入度。如让团队参与制定工作流程而非直接下达；3）社会关系影响绩效——员工不是孤立个体，团队内的社会关系（友谊、认可、归属）对绩效影响巨大。建设团队文化比制定KPI更重要；4）情绪劳动需被承认——管理者关注员工的情绪状态（不只看工作产出），理解工作压力和人际摩擦，提供支持。实践应用：1）MBWA（走动式管理）——定期到工作现场，与一线员工交流，不是检查而是倾听和关心；2）定期Skip-level（越级对话）——高层直接与基层员工对话，了解真实情况并传递关注；3）认可文化——及时公开认可个人和团队贡献，让”被看见”成为日常。注意事项：关注必须真诚，不能机械化（员工能分辨真关心和走过场）；霍桑效应有边际递减，需持续创新关注方式。",
+      "source": "霍桑实验",
+      "author": "埃尔顿·梅奥",
+      "tags": [
+        "霍桑效应",
+        "关注",
+        "激励",
+        "经典"
+      ]
+    },
+    {
+      "title": "权力下放与授权七步法",
+      "category": "领导力",
+      "summary": "通过结构化授权步骤释放团队能力，同时控制风险",
+      "content": "有效授权是管理者最重要的能力之一，但多数管理者”授权不足”（自己累死团队闲死）或”授权过度”（放手不管导致失控）。七步授权法：1）选择任务——区分可授权和不可授权任务。可授权：重复性工作、专业领域工作、学习成长机会。不可授权：绩效评估、战略决策、人事决策、机密事项；2）选择人选——根据能力（能否做）和意愿（愿不愿做）选择。能力高意愿高→充分授权；能力高意愿低→激发动力后授权；能力低意愿高→指导后授权；能力低意愿低→先培训再考虑；3）明确期望——说明做什么、为什么做、达到什么标准、何时完成。关注”结果”而非”过程”（告诉他做什么不是怎么做）。用”复述确认”确保理解一致；4）提供资源——确保对方有完成任务所需的权限、预算、信息、人脉支持。移除障碍；5）设定检查点——约定检查频率和方式。高风险任务每日检查，中风险每周，低风险里程碑检查。检查不等于微观管理，而是”我关注进展并提供帮助”；6）执行与支持——执行过程中对方遇到困难时提供指导而非直接接手。用提问代替指令（”你觉得怎么处理？”）。允许犯错（在可控范围内）；7）反馈与认可——任务完成后及时反馈：做得好的具体行为、可以改进的点、下次的期望。认可努力和成果。授权等级（从低到高）：1）”去做这件事”（指令式）→2）”去研究后给我建议”（建议式）→3）”告诉我你打算怎么做，我同意后执行”（审批式）→4）”去做，完成后告诉我结果”（报告式）→5）”去做，我相信你的判断”（委托式）。根据任务重要性和人员成熟度选择等级。",
+      "source": "领导力发展理论",
+      "author": "肯·布兰查德",
+      "tags": [
+        "授权",
+        "领导力",
+        "赋能",
+        "经典"
+      ]
+    },
+    {
+      "title": "5Why根因分析法",
+      "category": "项目管理",
+      "summary": "通过连续追问”为什么”深入挖掘问题的根本原因",
+      "content": "5Why法由丰田创始人丰田佐吉发明，大野耐一在丰田生产系统中推广。核心理念：问题的表象往往不是真正原因，需通过连续追问深入到根因。经典案例：1）现象：机器停了。为什么？→保险丝断了；2）为什么保险丝断？→超载了；3）为什么超载？→轴承润滑不足；4）为什么润滑不足？→油泵吸不上油；5）为什么吸不上油？→油泵磨损且无定期维护计划。根因：缺少预防性维护制度（而非简单换保险丝）。实施要点：1）基于事实而非推测——每一步”为什么”需有数据和观察支撑，不能凭空猜测。现场观察（三现主义：现场、现物、现实）至关重要；2）聚焦流程而非人——追问”为什么这个流程允许错误发生”而非”谁犯的错”。目标是改进系统而非追责；3）不一定恰好5个——可能3次就找到根因，也可能需要7-8次。关键是问到可采取改进行动为止；4）可能有多个根因——一个问题可能有多条因果链，需逐一分析。使用鱼骨图辅助识别可能的根因维度（人、机、料、法、环、测）；5）验证根因——找到根因后，反向验证：如果这个根因消除，问题还会发生吗？注意事项：5Why易学难精，需训练”打破砂锅问到底”的思维；避免将”人的疏忽”作为根因（疏忽是表象，应追问为何疏忽未被防住）；与PDCA结合——找到根因后立即制定改进措施并标准化。",
+      "source": "丰田生产系统",
+      "author": "大野耐一",
+      "tags": [
+        "5Why",
+        "根因分析",
+        "丰田",
+        "经典"
+      ]
+    },
+    {
+      "title": "麦肯锡七步问题解决法",
+      "category": "项目管理",
+      "summary": "通过七步结构化方法拆解和解决复杂商业问题",
+      "content": "麦肯锡七步法是咨询行业经典的问题解决框架。七步骤：1）陈述问题——用一句话清晰定义问题（SCQA框架：情境-冲突-问题-答案）。好的问题陈述决定解决方向。区分问题（现状与目标的差距）和症状（问题的表象）；2）分解问题——用MECE原则（相互独立、完全穷尽）将问题拆解为子问题。常用逻辑树（Issue Tree）：一级分解按维度（如按产品/渠道/客户），逐层细化直到可分析；3）淘汰非关键——80/20原则，聚焦影响最大的少数子问题。用假设树快速验证哪些方向有高价值。避免”什么都研究”；4）制定工作计划——为每个关键子问题制定分析计划：分析什么、数据来源、分析方法、时间安排、负责人。输出是Issue Paper；5）关键分析——收集数据验证假设。分析方法包括：对比分析、趋势分析、标杆分析、敏感性分析。遵循”结论先行”（先给假设再验证），而非”数据驱动结论”（先收集数据再说）；6）综合建议——将各子问题的结论综合为整体方案。用金字塔原理组织逻辑：核心结论→支撑论点→数据证据。确保建议可执行、有时效、有人负责；7）形成故事线——将建议转化为连贯的故事。SCQA叙事：情境（背景）→冲突（问题）→疑问（如何解决）→回答（方案）。用图表和数据可视化增强说服力。注意事项：七步法非线性，可来回迭代；每一步需与利益相关者确认方向正确再深入。",
+      "source": "麦肯锡咨询方法论",
+      "author": "麦肯锡咨询公司",
+      "tags": [
+        "麦肯锡",
+        "问题解决",
+        "MECE",
+        "经典"
+      ]
+    },
+    {
+      "title": "鱼骨图分析法（石川图）",
+      "category": "项目管理",
+      "summary": "用因果图系统化识别问题的所有可能原因",
+      "content": "鱼骨图（因果图）由石川馨提出，是质量管理的七大基本工具之一。结构：鱼头（右端）写问题，鱼骨（主线）画水平线，鱼刺（斜线）标注原因类别，每个类别下细分具体原因。6M分析维度：1）人（Man）——技能不足、疲劳、态度、培训不够、人员变动；2）机（Machine）——设备故障、精度不足、维护不当、容量不够；3）料（Material）——原材料质量、供应商变化、规格不符、库存问题；4）法（Method）——流程缺陷、标准缺失、操作不当、参数设定；5）环（Environment）——温湿度、照明、噪声、布局、安全；6）测（Measurement）——测量方法、仪器精度、标准偏差。实施步骤：1）明确问题——在鱼头处清晰描述问题；2）确定类别——选择合适的6M维度（或自定义维度）；3）头脑风暴——团队共创，对每个维度问”在这个方面可能有什么原因导致问题？”；4）细化原因——对每个识别的原因继续追问”为什么会这样？”，形成因果链；5）标记主因——用投票或数据排序，标记最可能的3-5个关键原因；6）验证和改进——对关键原因收集数据验证，制定改进措施。与5Why结合使用：鱼骨图识别广度，5Why挖掘深度。注意事项：鱼骨图是发散工具不提供解决方案；需团队共创而非个人绘制；原因需基于数据和现场观察而非主观猜测。",
+      "source": "质量管理理论",
+      "author": "石川馨",
+      "tags": [
+        "鱼骨图",
+        "石川图",
+        "根因分析",
+        "经典"
+      ]
+    },
+    {
+      "title": "MVP最小可行产品验证法",
+      "category": "创新管理",
+      "summary": "用最少资源构建可验证核心假设的最简产品形态",
+      "content": "MVP（Minimum Viable Product）是精益创业的核心工具，目的是用最小成本验证最危险的假设。注意：MVP不是”烂产品”，而是”能学习的产品”。MVP类型（从轻到重）：1）冒烟测试——做一个着陆页描述产品价值，放”立即购买”按钮，用户点击后显示”即将上线”。验证需求是否真实存在（如Buffer最初只有一个着陆页就获得了第一批用户）；2）绿野仙踪——前端看起来自动化，后端人工操作。如食品配送App初期创始人亲自送餐验证流程；3）原型——高保真原型用Figma等工具，放用户面前测试交互和需求；4）单一功能MVP——只做核心功能的极简版本。如Dropbox早期只有同步功能；5）顾问式MVP——不做产品，先人工服务客户，理解需求后再产品化。MVP设计原则：1）明确最危险假设——什么假设如果错了整个产品就失败？优先验证它。如”用户愿意为这个功能付费”或”用户每天会用3次以上”；2）定义成功标准——上线前明确什么数据算验证成功。如”7日留存>30%”或”付费转化>5%”；3）最小化但不简陋——MVP需提供完整的核心价值体验，不是残缺的产品。用户体验可以粗糙但不能无法使用；4）快速迭代——MVP周期尽量短（2-4周），基于用户反馈快速调整。注意事项：MVP需要勇气砍掉非核心功能；不要做”市场调研”替代MVP（说的和做的往往不同）；MVP验证的是假设不是产品。",
+      "source": "《精益创业》",
+      "author": "埃里克·莱斯",
+      "tags": [
+        "MVP",
+        "精益创业",
+        "验证",
+        "现代"
+      ]
+    }
+  ]
+};
+//=================== FALLBACK DATA ===================
+const FALLBACK={
+sport:{target:'全身训练',duration:'30分钟',exercises:[
+{name:'开合跳',sets:'3组',duration:'45秒',desc:'全身燃脂热身动作',difficulty:'初级',tips:'保持核心收紧，呼吸均匀'},
+{name:'深蹲',sets:'3组',duration:'15次',desc:'锻炼下肢和臀部',difficulty:'初级',tips:'膝盖不超过脚尖，背部挺直'},
+{name:'俯卧撑',sets:'3组',duration:'12次',desc:'锻炼胸肩手臂',difficulty:'中级',tips:'身体保持一条直线'},
+{name:'平板支撑',sets:'3组',duration:'45秒',desc:'核心稳定性训练',difficulty:'中级',tips:'臀部不要塌陷或抬高'},
+{name:'弓步蹲',sets:'3组',duration:'每侧10次',desc:'下肢力量与平衡',difficulty:'中级',tips:'前膝90度，后膝接近地面'},
+{name:'拉伸放松',sets:'1组',duration:'60秒',desc:'全身拉伸放松',difficulty:'初级',tips:'深呼吸，慢慢拉伸'}
+]},
+english:{
+phrases:[
+{en:"How's it going?",zh:"最近怎么样？",scene:"日常问候"},
+{en:"I couldn't agree more.",zh:"我完全同意。",scene:"表达观点"},
+{en:"Could you do me a favor?",zh:"能帮我个忙吗？",scene:"请求帮助"},
+{en:"What do you mean by that?",zh:"你那样说是什么意思？",scene:"澄清理解"},
+{en:"Let's call it a day.",zh:"今天就到这里吧。",scene:"结束工作"},
+{en:"It's been a while.",zh:"好久不见了。",scene:"久别重逢"},
+{en:"I'm looking forward to it.",zh:"我很期待。",scene:"表达期待"},
+{en:"That makes sense.",zh:"有道理。",scene:"理解认同"},
+{en:"Keep up the good work!",zh:"继续保持！",scene:"鼓励他人"},
+{en:"What's on your mind?",zh:"你在想什么？",scene:"关心询问"}
+],
+words:[
+{en:"resilient",zh:"有韧性的；能复原的",example:"She is a resilient person who never gives up.",phonetic:"rɪˈzɪliənt"},
+{en:"innovate",zh:"创新；改革",example:"Companies must innovate to stay competitive.",phonetic:"ˈɪnəveɪt"},
+{en:"meticulous",zh:"一丝不苟的",example:"He is meticulous about every detail.",phonetic:"məˈtɪkjələs"},
+{en:"pragmatic",zh:"务实的",example:"We need a pragmatic approach to this problem.",phonetic:"præɡˈmætɪk"},
+{en:"eloquent",zh:"雄辩的；有口才的",example:"She gave an eloquent speech at the conference.",phonetic:"ˈeləkwənt"}
+]},
+diet:{
+breakfast:{name:'燕麦水果碗',calories:'350kcal',time:'10分钟',ingredients:['燕麦50g','牛奶200ml','蓝莓30g','香蕉半根','蜂蜜适量'],steps:['燕麦加牛奶小火煮沸3分钟','切好水果备用','装碗撒上水果和蜂蜜']},
+lunch:{name:'番茄鸡胸意面',calories:'520kcal',time:'25分钟',ingredients:['全麦意面80g','鸡胸肉120g','番茄2个','橄榄油1勺','罗勒叶'],steps:['意面煮熟备用','鸡胸肉煎熟切块','番茄炒酱加入鸡肉和意面拌匀']},
+dinner:{name:'蔬菜豆腐汤',calories:'280kcal',time:'20分钟',ingredients:['嫩豆腐1块','菠菜100g','香菇5朵','姜丝','盐'],steps:['豆腐切块香菇切片','水烧开放入姜丝和香菇','加入豆腐和菠菜煮5分钟调味']}
+},
+news:{
+hot:[
+{title:'国内经济持续回升，二季度GDP增长超预期',source:'新华社',time:'2小时前'},
+{title:'科技创新驱动高质量发展，多项技术取得突破',source:'人民日报',time:'3小时前'},
+{title:'全国多地推进城市更新，提升居民生活品质',source:'央视新闻',time:'4小时前'},
+{title:'绿色能源装机容量突破新高，碳中和稳步推进',source:'经济日报',time:'5小时前'},
+{title:'教育部发布新版课程方案，强化素质教育',source:'中国教育报',time:'6小时前'},
+{title:'交通基础设施投资加大，多条高铁开通运营',source:'中国交通报',time:'7小时前'},
+{title:'消费市场持续回暖，餐饮旅游强劲复苏',source:'经济参考报',time:'8小时前'},
+{title:'医保新政策落地，惠及亿万参保群众',source:'健康报',time:'9小时前'},
+{title:'乡村振兴成效显著，农产品电商蓬勃发展',source:'农民日报',time:'10小时前'},
+{title:'人工智能赋能千行百业，应用场景不断拓展',source:'科技日报',time:'12小时前'}
+],
+finance:[
+{title:'A股震荡走高，北向资金净流入超50亿',source:'证券时报',time:'1小时前'},
+{title:'央行公开市场操作，维护流动性合理充裕',source:'金融时报',time:'2小时前'},
+{title:'新能源板块表现活跃，锂电池概念领涨',source:'中国证券报',time:'3小时前'},
+{title:'银行股估值修复，机构看好高股息策略',source:'上海证券报',time:'4小时前'},
+{title:'REITs市场扩容提速，基础设施领域受关注',source:'证券日报',time:'5小时前'}
+],
+ecommerce:[
+{title:'直播电商规模持续增长，内容电商成新趋势',source:'电商报',time:'1小时前'},
+{title:'跨境电商政策利好，出海品牌加速布局',source:'亿邦动力',time:'2小时前'},
+{title:'即时零售渗透率提升，本地生活赛道升温',source:'36氪',time:'3小时前'},
+{title:'AI赋能电商运营，智能客服降本增效',source:'钛媒体',time:'5小时前'},
+{title:'农村电商物流体系完善，下沉市场潜力释放',source:'中国商报',time:'6小时前'}
+]
+},
+stock:{
+picks:[
+{code:'sh600519',name:'贵州茅台',price:1680.50,gain_pct:2.35,total_score:85.2,
+scores:{gain:78,volume:85,ma:90,macd:82,turnover:75,cap:60},
+analysis:{verdict:'多因子共振，可重点关注',strengths:['涨幅2.35%处于最佳区间','量能放大，资金介入明显','均线多头排列，趋势向好','MACD金叉向上，动能充足'],weaknesses:['市值偏大，弹性有限']}},
+{code:'sz000858',name:'五粮液',price:145.20,gain_pct:3.12,total_score:82.5,
+scores:{gain:85,volume:80,ma:85,macd:78,turnover:72,cap:65},
+analysis:{verdict:'多数指标向好，可适当关注',strengths:['涨幅3.12%较为健康','量价配合良好','均线偏多排列'],weaknesses:['MACD信号偏弱']}},
+{code:'sz000333',name:'美的集团',price:62.80,gain_pct:4.05,total_score:79.8,
+scores:{gain:90,volume:75,ma:70,macd:72,turnover:80,cap:70},
+analysis:{verdict:'部分指标突出，谨慎关注',strengths:['涨幅有力','换手活跃，交投积极'],weaknesses:['均线排列不够理想','量能持续性待观察']}}
+],
+indices:{sh:{name:'上证指数',value:3250.45,change:0.85},sz:{name:'深证成指',value:10856.32,change:1.12},cyb:{name:'创业板指',value:2156.78,change:1.45}}
+},
+management:[
+{title:'德鲁克：目标管理的5个核心原则',category:'战略管理',summary:'通过目标设定、分解、执行、反馈实现组织效能最大化',content:'1. 目标要具体可衡量（SMART原则）\n2. 目标需上下级协商一致\n3. 定期检查进度并反馈\n4. 目标与激励挂钩\n5. 关注成果而非过程',source:'《管理的实践》',author:'彼得·德鲁克'},
+{title:'OKR落地指南：从制定到复盘',category:'绩效管理',summary:'用目标与关键结果驱动团队聚焦和突破',content:'O是方向性目标，KR是可衡量的关键结果。制定时遵循：\n1. O要有挑战性和方向感\n2. KR要可量化，2-5个为宜\n3. 每周同步进度，每季复盘\n4. 透明公开，全员可见\n5. 与绩效评估适度分离',source:'《Measure What Matters》',author:'约翰·杜尔'},
+{title:'敏捷管理：Scrum每日站会的正确姿势',category:'项目管理',summary:'15分钟高效同步，聚焦三个问题',content:'每日站会三问：\n1. 昨天做了什么？\n2. 今天计划做什么？\n3. 有什么阻碍？\n注意事项：站会不是汇报会，不讨论细节；阻碍会后单独解决；保持时间盒15分钟内。',source:'《Scrum Guide》',author:'Jeff Sutherland'},
+{title:'SWOT分析：战略决策的基础工具',category:'战略管理',summary:'系统评估优势、劣势、机会、威胁',content:'S(优势)：内部有利因素\nW(劣势)：内部不利因素\nO(机会)：外部有利趋势\nT(威胁)：外部风险挑战\n关键是将内部能力与外部环境匹配，制定SO/WO/ST/WT四类策略。',source:'哈佛商学院',author:'肯尼斯·安德鲁斯'},
+{title:'PDCA循环：持续改进的引擎',category:'项目管理',summary:'计划-执行-检查-行动的螺旋上升',content:'P(Plan)：制定计划和目标\nD(Do)：执行计划\nC(Check)：检查结果与目标差距\nA(Act)：标准化成功经验，改进不足\n每轮循环后标准提升一级，实现持续改进。',source:'质量管理理论',author:'戴明'},
+{title:'赋能型领导：从管控到激发',category:'领导力',summary:'给团队自主权，激发内驱力',content:'1. 共享信息，打破信息壁垒\n2. 培养判断力，让一线做决策\n3. 明确边界，在边界内自主\n4. 容忍失败，鼓励试错\n5. 从"听我的"到"你觉得呢"',source:'《赋能》',author:'斯坦利·麦克里斯特尔'},
+{title:'费曼学习法在团队培训中的应用',category:'人才管理',summary:'用教的方式倒逼学，深度掌握知识',content:'1. 选择一个概念\n2. 用简单语言向新手解释\n3. 发现解释中的卡点\n4. 回去补漏，简化表达\n团队中让成员轮流"当老师"讲解所学，效果远胜被动听课。',source:'费曼学习法',author:'理查德·费曼'},
+{title:'六西格玛：用数据消灭缺陷',category:'项目管理',summary:'DMAIC方法论降低过程变异',content:'定义-测量-分析-改进-控制\n核心是统计过程控制，目标是百万机会缺陷数<3.4。适用于重复性流程优化，如生产、服务标准化。',source:'摩托罗拉',author:'比尔·史密斯'},
+{title:'金字塔原理：结构化表达与思考',category:'沟通管理',summary:'先结论后论据，MECE分类',content:'1. 结论先行\n2. 以上统下\n3. 分类归组（MECE：互不重叠、完全穷尽）\n4. 逻辑递进\n适用于汇报、写作、演讲，让表达清晰有力。',source:'《金字塔原理》',author:'芭芭拉·明托'},
+{title:'蓝海战略：跳出竞争红海',category:'战略管理',summary:'价值创新开辟无人争抢的市场空间',content:'通过"剔除-减少-增加-创造"四步动作框架，重新定义产品边界。不追求打败对手，而是让竞争变得无关紧要。典型案例：太阳马戏团。',source:'《蓝海战略》',author:'W·钱·金'}
+]
+};
 
+//=================== UTIL ===================
+function $(s){return document.querySelector(s)}
+function $$(s){return document.querySelectorAll(s)}
+function esc(s){return String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]))}
+function getD(){return EMBED_DATA&&Object.keys(EMBED_DATA).length>1?EMBED_DATA:FALLBACK}
+function dayOfYear(){const n=new Date();const s=new Date(n.getFullYear(),0,0);return Math.floor((n-s)/86400000)}
+function todayStr(){const d=new Date();const w=['日','一','二','三','四','五','六'];return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 周${w[d.getDay()]}`}
+
+//=================== NAV ===================
+function initNav(){
+  $('#menuToggle').onclick=()=>{$('#sidebar').classList.add('open');$('#overlay').classList.add('show')};
+  $('#overlay').onclick=()=>{$('#sidebar').classList.remove('open');$('#overlay').classList.remove('show')};
+  $$('.nav-item').forEach(item=>{
+    item.onclick=()=>{
+      const sec=item.dataset.section;
+      $$('.nav-item').forEach(n=>n.classList.remove('active'));
+      item.classList.add('active');
+      $$('.section').forEach(s=>s.classList.remove('active'));
+      $('#'+sec).classList.add('active');
+      if(window.innerWidth<768){$('#sidebar').classList.remove('open');$('#overlay').classList.remove('show')}
+      renderSection(sec);
+    };
+  });
+  $('#dateDisplay').textContent=todayStr();
+}
+
+var rendered={};
+function renderSection(sec){
+  if(rendered[sec])return;
+  try{
+    ({sport:renderSport,english:renderEnglish,diet:renderDiet,news:renderNews,stock:renderStock,management:renderManagement}[sec])();
+    rendered[sec]=true;
+  }catch(e){console.error('render',sec,e);$('#'+sec).innerHTML='<div class="empty">加载失败，请刷新重试</div>'}
+}
+
+//=================== SPORT ===================
+function renderSport(){
+  const d=getD();
+  const wd=new Date().getDay();
+  const schedule={0:'full_body',1:'abs',2:'glutes',3:'shoulders',4:'abs',5:'glutes',6:'shoulders'};
+  const names={abs:'练腹',glutes:'练臀',shoulders:'练肩',full_body:'全身'};
+  let s=d.sport;
+  if(!s||!s.exercises||!s.exercises.length){s=FALLBACK.sport}
+  const target=s.target||names[schedule[wd]]||'全身';
+  const exs=s.exercises;
+  let h=`<div class="section-title">🏃 每日运动</div>
+    <div class="section-sub">今日训练：${esc(target)} | 总时长：${esc(s.duration||'30分钟')} | ${exs.length}个动作</div>`;
+  exs.forEach((e,i)=>{
+    const diff=e.difficulty||'初级';
+    const dc=diff.includes('高')?'diff-hard':diff.includes('中')?'diff-mid':'diff-easy';
+    h+=`<div class="card"><div class="timeline-item">
+      <div class="timeline-num">${i+1}</div>
+      <div class="card-title">${esc(e.name)}</div>
+      <div style="margin:6px 0">
+        <span class="badge badge-primary">${esc(e.sets||'3组')}</span>
+        <span class="badge badge-info">${esc(e.duration||e.reps||'')}</span>
+        <span class="badge ${diff.includes('高')?'badge-danger':diff.includes('中')?'badge-warning':'badge-success'} ${dc}">${esc(diff)}</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-2);margin-top:6px">${esc(e.desc||'')}</div>
+      ${e.tips?`<div style="font-size:12px;color:var(--primary);margin-top:8px;padding:6px 10px;background:#FFF8F5;border-radius:6px">💡 ${esc(e.tips)}</div>`:''}
+    </div></div>`;
+  });
+  h+=`<div class="disclaimer">运动前请充分热身，量力而行，注意安全</div>`;
+  if(EMBED_DATA.build_date){h+=`<div class="build-info">数据更新：${EMBED_DATA.build_date}</div>`}
+  $('#sport').innerHTML=h;
+}
+
+//=================== ENGLISH ===================
+function renderEnglish(){
+  const d=getD();
+  let e=d.english;
+  if(!e){e=FALLBACK.english}
+  let h=`<div class="section-title">📖 英语学习</div>
+    <div class="section-sub">每日10句日常短语 + 5个核心词汇</div>
+    <div class="tabs"><div class="tab active" data-et="phrases">💬 日常短语</div><div class="tab" data-et="words">📚 核心词汇</div></div>
+    <div id="enPhrases"></div><div id="enWords" style="display:none"></div>`;
+  $('#english').innerHTML=h;
+  const ps=e.phrases||[];
+  let ph='';
+  ps.forEach((p,i)=>{
+    ph+=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div style="flex:1"><div style="font-size:16px;font-weight:600;color:var(--secondary)">${esc(p.en)}</div>
+      <div style="font-size:14px;margin-top:4px">${esc(p.zh)}</div></div>
+      ${p.scene?`<span class="badge badge-gray">${esc(p.scene)}</span>`:''}</div></div>`;
+  });
+  $('#enPhrases').innerHTML=ph;
+  const ws=e.words||[];
+  let wh='';
+  ws.forEach(w=>{
+    wh+=`<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><span style="font-size:18px;font-weight:700;color:var(--primary)">${esc(w.en)}</span>
+        ${w.phonetic?`<span style="font-size:13px;color:var(--text-3);margin-left:8px">/${esc(w.phonetic)}/</span>`:''}</div>
+      </div>
+      <div style="font-size:14px;margin:6px 0">${esc(w.zh)}</div>
+      ${w.example?`<div style="font-size:13px;color:var(--text-2);padding:8px;background:var(--bg);border-radius:6px;margin-top:6px">📝 ${esc(w.example)}</div>`:''}
+    </div>`;
+  });
+  $('#enWords').innerHTML=wh;
+  $$('#english .tab').forEach(t=>{
+    t.onclick=()=>{
+      $$('#english .tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const isP=t.dataset.et==='phrases';
+      $('#enPhrases').style.display=isP?'block':'none';
+      $('#enWords').style.display=isP?'none':'block';
+    };
+  });
+}
+
+//=================== DIET ===================
+function renderDiet(){
+  const d=getD();
+  let dt=d.diet;
+  if(!dt){dt=FALLBACK.diet}
+  const meals=[['breakfast','早餐','meal-breakfast'],['lunch','午餐','meal-lunch'],['dinner','晚餐','meal-dinner']];
+  let h=`<div class="section-title">🥗 健康饮食</div><div class="section-sub">今日三餐健康菜谱推荐</div>`;
+  let total=0;
+  meals.forEach(([key,label,cls])=>{
+    const m=dt[key];
+    if(!m)return;
+    const cal=parseInt(m.calories)||0;total+=cal;
+    let ing=(m.ingredients||[]).map(i=>`<span class="tag">${esc(i)}</span>`).join('');
+    let st=(m.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('');
+    h+=`<div class="meal-card ${cls}">
+      <div class="meal-label">${label}</div>
+      <div class="meal-name">${esc(m.name)}</div>
+      <div class="meal-meta">🔥 ${esc(m.calories||'')} | ⏱ ${esc(m.time||'')}</div>
+      <div style="margin:8px 0"><div style="font-size:12px;color:var(--text-2);margin-bottom:4px">食材：</div>${ing}</div>
+      <div><div style="font-size:12px;color:var(--text-2);margin-bottom:4px">步骤：</div><ol class="meal-steps">${st}</ol></div>
+    </div>`;
+  });
+  h+=`<div class="card" style="text-align:center"><span style="font-size:14px;color:var(--text-2)">今日总热量</span><br><span style="font-size:24px;font-weight:700;color:var(--primary)">${total} kcal</span></div>`;
+  $('#diet').innerHTML=h;
+}
+
+//=================== NEWS ===================
+function renderNews(){
+  const d=getD();
+  let n=d.news;
+  if(!n){n=FALLBACK.news}
+  let h=`<div class="section-title">📰 财经新闻</div><div class="section-sub">每日实时新闻热点 | 财经资讯 | 电商动态</div>
+    <div class="tabs">
+      <div class="tab active" data-nt="hot">🔥 热点${(n.hot||[]).length}</div>
+      <div class="tab" data-nt="finance">💰 财经${(n.finance||[]).length}</div>
+      <div class="tab" data-nt="ecommerce">🛒 电商${(n.ecommerce||[]).length}</div>
+    </div>
+    <div id="newsContent"></div>`;
+  $('#news').innerHTML=h;
+  function renderList(key){
+    const arr=n[key]||[];
+    if(!arr.length)return '<div class="empty">暂无数据</div>';
+    return arr.map((item,i)=>`<div class="news-item" onclick="this.classList.toggle('expanded')">
+      <div class="news-num">${i+1}</div>
+      <div style="flex:1">
+        <div class="news-title">${esc(item.title)}</div>
+        <div class="news-meta">${esc(item.source||'')} · ${esc(item.time||'')}</div>
+        ${item.summary||item.content?`<div class="news-detail">${esc(item.summary||item.content)}</div>`:''}
+      </div></div>`).join('');
+  }
+  function show(key){$('#newsContent').innerHTML='<div class="card">'+renderList(key)+'</div>'}
+  show('hot');
+  $$('#news .tab').forEach(t=>{
+    t.onclick=()=>{
+      $$('#news .tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      show(t.dataset.nt);
+    };
+  });
+}
+
+//=================== STOCK ===================
+function renderStock(){
+  const d=getD();
+  let s=d.stock;
+  if(!s){s=FALLBACK.stock}
+  let h=`<div class="section-title">📈 股市分析</div>
+    <div class="section-sub">🦞 小龙虾选股引擎 · 多因子技术指标评分模型</div>`;
+  // 指数
+  if(s.indices){
+    const idx=s.indices;
+    h+=`<div class="card" style="display:flex;gap:8px;justify-content:space-around">`;
+    ['sh','sz','cyb'].forEach(k=>{
+      if(!idx[k])return;
+      const up=idx[k].change>=0;
+      h+=`<div style="text-align:center"><div style="font-size:12px;color:var(--text-2)">${esc(idx[k].name)}</div>
+        <div style="font-size:18px;font-weight:700;margin:2px 0">${idx[k].value.toFixed(2)}</div>
+        <div class="${up?'up':'down'}" style="font-size:13px;font-weight:600">${up?'▲':'▼'} ${Math.abs(idx[k].change).toFixed(2)}%</div></div>`;
+    });
+    h+=`</div>`;
+  }
+  // 选股结果
+  const picks=s.picks||[];
+  if(!picks.length){
+    h+=`<div class="card"><div class="empty">今日暂无符合条件的股票（可能非交易日）</div></div>`;
+  }else{
+    picks.forEach((p,i)=>{
+      const rank=i+1;
+      const up=p.gain_pct>=0;
+      const sc=p.scores||{};
+      h+=`<div class="card stock-card rank-${rank}">
+        <div class="stock-head">
+          <div><div class="stock-name">${esc(p.name)}</div><div class="stock-code">${esc(p.code)}</div></div>
+          <div class="stock-rank">#${rank}</div>
+        </div>
+        <div style="display:flex;align-items:baseline;margin-bottom:8px">
+          <span class="stock-price">¥${(p.price||0).toFixed(2)}</span>
+          <span class="stock-change ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(p.gain_pct||0).toFixed(2)}%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-2)">综合评分</span><span style="font-weight:700;color:var(--primary)">${(p.total_score||0).toFixed(1)} / 100</span></div>
+        <div class="score-bar"><div class="score-fill" style="width:${p.total_score||0}%"></div></div>
+        <div class="factor-grid">
+          ${factorBox('涨幅',sc.gain)}${factorBox('量能',sc.volume)}${factorBox('均线',sc.ma)}
+          ${factorBox('MACD',sc.macd)}${factorBox('换手',sc.turnover)}${factorBox('市值',sc.cap)}
+        </div>`;
+      if(p.analysis){
+        const a=p.analysis;
+        h+=`<div class="analysis-box">
+          <div class="analysis-verdict">${esc(a.verdict||'')}</div>`;
+        if(a.strengths&&a.strengths.length){h+=`<ul class="analysis-list">${a.strengths.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`}
+        if(a.weaknesses&&a.weaknesses.length){h+=`<ul class="analysis-list weak" style="margin-top:6px">${a.weaknesses.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`}
+        h+=`</div>`;
+      }
+      h+=`</div>`;
+    });
+  }
+  h+=`<div style="display:flex;gap:8px;margin:12px 0">
+    <button class="btn btn-outline" style="flex:1" onclick="openStrategy()">⚙️ 调整策略参数</button>
+    <button class="btn btn-outline" style="flex:1" onclick="toggleSource()">📋 查看选股源码</button>
+  </div>
+  <div id="stockSource" style="display:none"></div>
+  <div class="disclaimer">⚠️ 以上结果基于技术指标自动生成，仅供参考，不构成投资建议。股市有风险，投资需谨慎。</div>`;
+  if(EMBED_DATA.build_time){h+=`<div class="build-info">数据更新：${EMBED_DATA.build_date||''} ${EMBED_DATA.build_time||''}</div>`}
+  $('#stock').innerHTML=h;
+}
+function factorBox(label,val){
+  const v=(val||0).toFixed(0);
+  const cls=v>=70?'high':v<40?'low':'';
+  return `<div class="factor"><div class="factor-label">${label}</div><div class="factor-val ${cls}">${v}</div></div>`;
+}
+
+//=================== STRATEGY PANEL ===================
+var strategyConfig={
+  gain_min:2.0,gain_max:7.0,volume_ratio:1.5,turnover_min:3.0,turnover_max:15.0,
+  market_cap_min:50,market_cap_max:500,weight_gain:25,weight_volume:25,weight_ma:20,
+  weight_macd:15,weight_turnover:10,weight_cap:5
+};
+function openStrategy(){
+  const items=[
+    ['gain_min','最小涨幅(%)',0,15,0.5],['gain_max','最大涨幅(%)',0,20,0.5],
+    ['volume_ratio','量比阈值',0.5,5,0.1],['turnover_min','最低换手率(%)',0,10,0.5],
+    ['turnover_max','最高换手率(%)',5,30,1],['market_cap_min','最低市值(亿)',0,500,10],
+    ['market_cap_max','最高市值(亿)',100,5000,100],
+    ['weight_gain','涨幅权重',0,50,1],['weight_volume','量能权重',0,50,1],
+    ['weight_ma','均线权重',0,50,1],['weight_macd','MACD权重',0,50,1],
+    ['weight_turnover','换手率权重',0,50,1],['weight_cap','市值权重',0,50,1]
+  ];
+  let h='';
+  items.forEach(([k,label,min,max,step])=>{
+    h+=`<div class="strategy-item"><label>${label}：<strong id="v_${k}">${strategyConfig[k]}</strong></label>
+      <input type="range" min="${min}" max="${max}" step="${step}" value="${strategyConfig[k]}" oninput="$('#v_${k}').textContent=this.value;strategyConfig['${k}']=parseFloat(this.value)"></div>`;
+  });
+  $('#strategyBody').innerHTML=h;
+  $('#strategyPanel').classList.add('open');
+}
+function closeStrategy(){$('#strategyPanel').classList.remove('open')}
+function resetStrategy(){
+  Object.assign(strategyConfig,{gain_min:2.0,gain_max:7.0,volume_ratio:1.5,turnover_min:3.0,turnover_max:15.0,market_cap_min:50,market_cap_max:500,weight_gain:25,weight_volume:25,weight_ma:20,weight_macd:15,weight_turnover:10,weight_cap:5});
+  openStrategy();
+}
+function applyStrategy(){
+  // 前端重新评分（使用内嵌数据）
+  const d=getD();
+  const picks=(d.stock&&d.stock.picks)||[];
+  if(!picks.length){closeStrategy();return}
+  picks.forEach(p=>{
+    const sc=p.scores||{};
+    p.total_score=parseFloat(((
+      (sc.gain||0)*strategyConfig.weight_gain/100+
+      (sc.volume||0)*strategyConfig.weight_volume/100+
+      (sc.ma||0)*strategyConfig.weight_ma/100+
+      (sc.macd||0)*strategyConfig.weight_macd/100+
+      (sc.turnover||0)*strategyConfig.weight_turnover/100+
+      (sc.cap||0)*strategyConfig.weight_cap/100
+    )).toFixed(1));
+  });
+  picks.sort((a,b)=>b.total_score-a.total_score);
+  rendered.stock=false;
+  renderStock();
+  closeStrategy();
+}
+
+//=================== SOURCE CODE ===================
+var sourceVisible=false;
+function toggleSource(){
+  const el=$('#stockSource');
+  if(sourceVisible){el.style.display='none';sourceVisible=false;return}
+  sourceVisible=true;
+  el.style.display='block';
+  el.innerHTML=`<div class="card"><div class="card-title">🦞 小龙虾选股引擎 - 核心源码</div>
+    <div style="font-size:12px;color:var(--text-2);margin-bottom:8px">以下为选股策略核心代码，可复制修改后本地运行（Python3）</div>
+    <pre style="background:#1e1e1e;color:#d4d4d4;padding:14px;border-radius:8px;font-size:12px;overflow-x:auto;line-height:1.5;max-height:400px;overflow-y:auto">${esc(STOCK_SOURCE)}</pre>
+    <button class="btn btn-primary" style="margin-top:8px;width:100%" onclick="copySource()">📋 复制代码</button></div>`;
+}
+function copySource(){
+  navigator.clipboard.writeText(STOCK_SOURCE).then(()=>alert('代码已复制到剪贴板！')).catch(()=>alert('复制失败，请手动选择复制'));
+}
+
+const STOCK_SOURCE=`# 🦞 小龙虾选股引擎 - 多因子技术指标评分模型
+# 完整源码见 stock_picker.py，以下为核心逻辑摘要
+
+class StockPickerConfig:
+    \"\"\"选股参数配置 - 所有参数均可自定义修改\"\"\"
+    gain_min = 2.0        # 最小涨幅 (%)
+    gain_max = 7.0        # 最大涨幅 (%)
+    turnover_min = 3.0    # 最低换手率 (%)
+    turnover_max = 15.0   # 最高换手率 (%)
+    market_cap_min = 50   # 最低市值 (亿)
+    market_cap_max = 500  # 最高市值 (亿)
+    ma_periods = [5, 10, 20]  # 均线周期
+    macd_fast, macd_slow, macd_signal = 12, 26, 9
+    volume_ratio_threshold = 1.5  # 量比阈值
+    # 因子权重（总和100）
+    weight_gain = 25      # 涨幅因子
+    weight_volume = 25    # 量能因子
+    weight_ma = 20        # 均线因子
+    weight_macd = 15      # MACD因子
+    weight_turnover = 10  # 换手率因子
+    weight_cap = 5        # 市值因子
+
+def score_gain(stock, config):
+    \"\"\"涨幅评分：2%-7%最佳，越接近中间越高\"\"\"
+    gain = (stock['price'] - stock['prev_close']) / stock['prev_close'] * 100
+    if gain < config.gain_min or gain > config.gain_max:
+        return 0
+    optimal = (config.gain_min + config.gain_max) / 2
+    return max(0, 100 * (1 - abs(gain - optimal) / 3))
+
+def score_volume(stock, klines, config):
+    \"\"\"量能评分：当日量 > 5日均量 × 阈值\"\"\"
+    avg_vol = sum(k['volume'] for k in klines[-6:-1]) / 5
+    ratio = stock['volume'] / avg_vol if avg_vol > 0 else 0
+    if ratio < config.volume_ratio_threshold:
+        return 0
+    return min(100, (ratio - config.volume_ratio_threshold) / 1.5 * 100)
+
+def score_ma(klines, config):
+    \"\"\"均线评分：MA5 > MA10 > MA20 多头排列\"\"\"
+    closes = [k['close'] for k in klines]
+    ma5 = sum(closes[-5:]) / 5
+    ma10 = sum(closes[-10:]) / 10
+    ma20 = sum(closes[-20:]) / 20
+    score = 0
+    if closes[-1] > ma5: score += 30
+    if ma5 > ma10: score += 30
+    if ma10 > ma20: score += 25
+    score += min(15, max(0, (ma5 - ma20) / ma20 * 300))
+    return score
+
+def score_macd(closes, config):
+    \"\"\"MACD评分：DIF零轴上方 + 金叉 + 红柱放大\"\"\"
+    ema12 = calc_ema(closes, 12)
+    ema26 = calc_ema(closes, 26)
+    dif = ema12 - ema26
+    dea = calc_ema(dif, 9)
+    score = 0
+    if dif[-1] > 0: score += 40       # 零轴上方
+    if dif[-1] > dea[-1]: score += 30  # 金叉
+    hist = (dif[-1] - dea[-1]) * 2
+    if hist > 0: score += 20           # 红柱
+    if len(dif) >= 2 and hist > (dif[-2]-dea[-2])*2: score += 10
+    return score
+
+# 数据源：新浪财经实时行情 API
+# https://hq.sinajs.cn/list=sh600519  (需Referer头, GBK编码)
+# 东方财富全量A股列表 API
+# https://push2.eastmoney.com/api/qt/clist/get
+
+# 完整代码请查看 stock_picker.py
+# 运行方式: python3 stock_picker.py
+`;
+
+//=================== MANAGEMENT ===================
+function renderManagement(){
+  const d=getD();
+  let mg=d.management;
+  if(!mg||!mg.length){mg=FALLBACK.management}
+  let h=`<div class="section-title">💼 管理学习</div>
+    <div class="section-sub">每日10条管理方法论 · 点击展开详情</div>`;
+  mg.forEach((m,i)=>{
+    const exp=i<3?'expanded':'';
+    const content=(m.content||'').replace(/\n/g,'<br>');
+    h+=`<div class="card mgmt-item ${exp}" onclick="this.classList.toggle('expanded')">
+      <div class="mgmt-head">
+        <div><div class="mgmt-title">${esc(m.title)}</div>
+        <div class="mgmt-summary">${esc(m.summary||'')}</div></div>
+        <span class="mgmt-arrow">▼</span>
+      </div>
+      <div class="mgmt-detail">
+        ${content}
+        ${m.source?`<div class="mgmt-source">📖 来源：${esc(m.source)}${m.author?' · '+esc(m.author):''}</div>`:''}
+      </div>
+    </div>`;
+  });
+  $('#management').innerHTML=h;
+}
+
+//=================== PWA ===================
+function initPWA(){
+  if('serviceWorker'in navigator){
+    // 单文件PWA：注册内联SW进行缓存
+    try{
+      const swCode=\`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})\`;
+      const blob=new Blob([swCode],{type:'application/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+    }catch(e){}
+  }
+  // 添加到主屏幕提示
+  if(!localStorage.getItem('pwaTipShown')){
+    setTimeout(()=>{$('#pwaTip').style.display='flex';localStorage.setItem('pwaTipShown','1')},3000);
+  }
+}
+
+//=================== INIT ===================
+document.addEventListener('DOMContentLoaded',()=>{
+  initNav();
+  initPWA();
+  renderSection('sport');
+});
+</script>
+</body>
+</html>
