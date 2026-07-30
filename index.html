@@ -218,6 +218,29 @@ body{
 .disclaimer{font-size:11px;color:var(--text-3);text-align:center;padding:16px;line-height:1.6}
 .build-info{font-size:11px;color:var(--text-3);text-align:center;padding:8px;margin-top:8px}
 .empty{text-align:center;padding:40px 20px;color:var(--text-3);font-size:14px}
+/* 视频按钮 */
+.video-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;background:linear-gradient(135deg,#FF0000,#CC0000);color:#fff;border:none;border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;margin-top:8px;transition:transform 0.15s}
+.video-btn:active{transform:scale(0.95)}
+.video-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px}
+.video-modal-inner{background:#fff;border-radius:var(--radius);width:100%;max-width:500px;max-height:80vh;overflow-y:auto}
+.video-modal-head{padding:16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.video-modal-head h3{font-size:16px}
+.video-modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-2);width:36px;height:36px}
+.video-modal-body{padding:16px}
+.video-link{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;text-decoration:none;color:var(--text);transition:background 0.15s}
+.video-link:hover{background:var(--bg)}
+.video-link-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+/* 语音按钮 */
+.speak-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:2px solid var(--primary);background:#fff;color:var(--primary);font-size:16px;cursor:pointer;flex-shrink:0;transition:all 0.2s}
+.speak-btn:hover{background:#FFF4EF}
+.speak-btn.speaking{background:var(--primary);color:#fff;animation:pulse 0.8s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.speak-row{display:flex;align-items:center;gap:10px}
+/* 菜系标签 */
+.cuisine-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-right:4px;letter-spacing:0.5px}
+.cuisine-yue{background:#E8F5E9;color:#2E7D32}
+.cuisine-chuan{background:#FFF3E0;color:#E65100}
+.cuisine-home{background:#FFF8E1;color:#B8860B}
 @media(min-width:768px){
   #sidebar{transform:translateX(0);box-shadow:none}
   #content{margin-left:260px;max-width:720px}
@@ -270,7 +293,7 @@ body{
 <script>
 const EMBED_DATA = {
   "build_date": "2026-07-30",
-  "build_time": "12:43:33",
+  "build_time": "17:16:32",
   "build_weekday": "周三",
   "sport": {
     "target": "练肩",
@@ -439,41 +462,53 @@ const EMBED_DATA = {
       ]
     },
     "lunch": {
-      "name": "三文鱼牛油果碗",
-      "calories": "约550kcal",
-      "time": "20分钟",
+      "name": "白灼虾",
+      "calories": "约320kcal",
+      "time": "10分钟",
       "ingredients": [
-        "三文鱼150g",
-        "牛油果半个",
-        "糙米饭1碗",
-        "毛豆50g",
-        "酱油芥末适量"
+        "基围虾300g",
+        "姜片适量",
+        "葱段适量",
+        "料酒少许",
+        "蘸料(生抽蒜蓉辣椒)"
       ],
       "steps": [
-        "三文鱼切块",
-        "牛油果切块",
-        "糙米饭铺碗底",
-        "所有食材摆上淋酱油"
+        "虾洗净剪去须脚",
+        "水加姜葱料酒烧开",
+        "放入虾煮2-3分钟至变色",
+        "捞出过冷水",
+        "搭配蘸料食用"
+      ],
+      "cuisine": "粤菜",
+      "tags": [
+        "高蛋白",
+        "低脂"
       ]
     },
     "dinner": {
-      "name": "凉拌黄瓜",
-      "calories": "约120kcal",
-      "time": "5分钟",
+      "name": "虾仁蒸水蛋",
+      "calories": "约280kcal",
+      "time": "12分钟",
       "ingredients": [
-        "黄瓜2根",
-        "蒜末适量",
-        "醋1勺",
-        "生抽少许",
-        "香油几滴"
+        "鸡蛋2个",
+        "温水150ml",
+        "虾仁6只",
+        "葱花适量",
+        "生抽少许"
       ],
       "steps": [
-        "黄瓜拍碎切段",
-        "加入蒜末醋生抽香油",
-        "拌匀即可"
+        "鸡蛋打散加温水搅匀过筛",
+        "盖上保鲜膜戳孔蒸8分钟",
+        "虾仁摆在蛋羹上再蒸2分钟",
+        "淋生抽撒葱花"
+      ],
+      "cuisine": "粤菜",
+      "tags": [
+        "滑嫩",
+        "高蛋白"
       ]
     },
-    "total_calories": "约1050kcal"
+    "total_calories": "约980kcal"
   },
   "news": {
     "date": "7月29日",
@@ -607,80 +642,14 @@ const EMBED_DATA = {
   "stock": {
     "picks": [
       {
-        "code": "sz000858",
-        "name": "五 粮 液",
-        "price": 78.65,
-        "gain_pct": 4.63,
-        "total_score": 61.3,
-        "scores": {
-          "gain": 50,
-          "volume": 61.27772715886816,
-          "ma": 0,
-          "macd": 0,
-          "turnover": 50,
-          "cap": 50
-        },
-        "analysis": {
-          "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
-          "strengths": [
-            "涨幅4.63%"
-          ],
-          "weaknesses": [
-            "非严格筛选结果"
-          ]
-        },
-        "klines": [
-          {
-            "date": "2026-07-23",
-            "open": 74.0,
-            "close": 74.84,
-            "high": 74.95,
-            "low": 73.32,
-            "volume": 37032085.0
-          },
-          {
-            "date": "2026-07-24",
-            "open": 74.6,
-            "close": 73.57,
-            "high": 75.3,
-            "low": 73.47,
-            "volume": 31139902.0
-          },
-          {
-            "date": "2026-07-27",
-            "open": 73.66,
-            "close": 73.9,
-            "high": 74.46,
-            "low": 73.51,
-            "volume": 20333141.0
-          },
-          {
-            "date": "2026-07-28",
-            "open": 73.9,
-            "close": 74.8,
-            "high": 75.16,
-            "low": 73.42,
-            "volume": 31481451.0
-          },
-          {
-            "date": "2026-07-29",
-            "open": 74.92,
-            "close": 75.17,
-            "high": 75.86,
-            "low": 74.69,
-            "volume": 40741683.0
-          }
-        ]
-      },
-      {
         "code": "sz000001",
         "name": "平安银行",
-        "price": 11.52,
-        "gain_pct": 2.13,
-        "total_score": 52.8,
+        "price": 11.61,
+        "gain_pct": 2.93,
+        "total_score": 96.3,
         "scores": {
           "gain": 50,
-          "volume": 52.84175718752301,
+          "volume": 96.34955189934627,
           "ma": 0,
           "macd": 0,
           "turnover": 50,
@@ -689,21 +658,13 @@ const EMBED_DATA = {
         "analysis": {
           "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
           "strengths": [
-            "涨幅2.13%"
+            "涨幅2.93%"
           ],
           "weaknesses": [
             "非严格筛选结果"
           ]
         },
         "klines": [
-          {
-            "date": "2026-07-23",
-            "open": 10.92,
-            "close": 11.08,
-            "high": 11.12,
-            "low": 10.9,
-            "volume": 109574268.0
-          },
           {
             "date": "2026-07-24",
             "open": 11.09,
@@ -735,18 +696,26 @@ const EMBED_DATA = {
             "high": 11.36,
             "low": 11.18,
             "volume": 151105407.0
+          },
+          {
+            "date": "2026-07-30",
+            "open": 11.28,
+            "close": 11.61,
+            "high": 11.62,
+            "low": 11.18,
+            "volume": 277770773.0
           }
         ]
       },
       {
-        "code": "sh600809",
-        "name": "山西汾酒",
-        "price": 135.05,
-        "gain_pct": 5.33,
-        "total_score": 42.0,
+        "code": "sz000858",
+        "name": "五 粮 液",
+        "price": 78.56,
+        "gain_pct": 4.51,
+        "total_score": 90.7,
         "scores": {
           "gain": 50,
-          "volume": 42.019835606270746,
+          "volume": 90.7169232004761,
           "ma": 0,
           "macd": 0,
           "turnover": 50,
@@ -755,7 +724,7 @@ const EMBED_DATA = {
         "analysis": {
           "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
           "strengths": [
-            "涨幅5.33%"
+            "涨幅4.51%"
           ],
           "weaknesses": [
             "非严格筛选结果"
@@ -763,13 +732,71 @@ const EMBED_DATA = {
         },
         "klines": [
           {
-            "date": "2026-07-23",
-            "open": 124.58,
-            "close": 122.98,
-            "high": 124.85,
-            "low": 120.36,
-            "volume": 11154708.0
+            "date": "2026-07-24",
+            "open": 74.6,
+            "close": 73.57,
+            "high": 75.3,
+            "low": 73.47,
+            "volume": 31139902.0
           },
+          {
+            "date": "2026-07-27",
+            "open": 73.66,
+            "close": 73.9,
+            "high": 74.46,
+            "low": 73.51,
+            "volume": 20333141.0
+          },
+          {
+            "date": "2026-07-28",
+            "open": 73.9,
+            "close": 74.8,
+            "high": 75.16,
+            "low": 73.42,
+            "volume": 31481451.0
+          },
+          {
+            "date": "2026-07-29",
+            "open": 74.92,
+            "close": 75.17,
+            "high": 75.86,
+            "low": 74.69,
+            "volume": 40741683.0
+          },
+          {
+            "date": "2026-07-30",
+            "open": 75.1,
+            "close": 78.56,
+            "high": 78.84,
+            "low": 75.01,
+            "volume": 72903867.0
+          }
+        ]
+      },
+      {
+        "code": "sh600809",
+        "name": "山西汾酒",
+        "price": 135.96,
+        "gain_pct": 6.04,
+        "total_score": 67.8,
+        "scores": {
+          "gain": 50,
+          "volume": 67.75172262751133,
+          "ma": 0,
+          "macd": 0,
+          "turnover": 50,
+          "cap": 50
+        },
+        "analysis": {
+          "verdict": "放宽条件筛选（今日符合严格条件的标的较少）",
+          "strengths": [
+            "涨幅6.04%"
+          ],
+          "weaknesses": [
+            "非严格筛选结果"
+          ]
+        },
+        "klines": [
           {
             "date": "2026-07-24",
             "open": 123.95,
@@ -801,6 +828,14 @@ const EMBED_DATA = {
             "high": 129.8,
             "low": 125.73,
             "volume": 15282818.0
+          },
+          {
+            "date": "2026-07-30",
+            "open": 128.2,
+            "close": 135.96,
+            "high": 136.0,
+            "low": 127.4,
+            "volume": 19068535.0
           }
         ]
       }
@@ -809,20 +844,20 @@ const EMBED_DATA = {
     "indices": {
       "sh": {
         "name": "上证指数",
-        "value": "3784.5517",
-        "change": "-43.9173%",
+        "value": "3804.6926",
+        "change": "-23.7764%",
         "up": false
       },
       "sz": {
         "name": "深证成指",
-        "value": "13141.22",
-        "change": "-517.225%",
+        "value": "13285.80",
+        "change": "-372.643%",
         "up": false
       },
       "cyb": {
         "name": "创业板指",
-        "value": "3179.58",
-        "change": "-199.116%",
+        "value": "3244.62",
+        "change": "-134.078%",
         "up": false
       }
     }
@@ -1002,8 +1037,8 @@ words:[
 ]},
 diet:{
 breakfast:{name:'燕麦水果碗',calories:'350kcal',time:'10分钟',ingredients:['燕麦50g','牛奶200ml','蓝莓30g','香蕉半根','蜂蜜适量'],steps:['燕麦加牛奶小火煮沸3分钟','切好水果备用','装碗撒上水果和蜂蜜']},
-lunch:{name:'番茄鸡胸意面',calories:'520kcal',time:'25分钟',ingredients:['全麦意面80g','鸡胸肉120g','番茄2个','橄榄油1勺','罗勒叶'],steps:['意面煮熟备用','鸡胸肉煎熟切块','番茄炒酱加入鸡肉和意面拌匀']},
-dinner:{name:'蔬菜豆腐汤',calories:'280kcal',time:'20分钟',ingredients:['嫩豆腐1块','菠菜100g','香菇5朵','姜丝','盐'],steps:['豆腐切块香菇切片','水烧开放入姜丝和香菇','加入豆腐和菠菜煮5分钟调味']}
+lunch:{name:'清蒸鲈鱼',calories:'380kcal',time:'20分钟',ingredients:['鲈鱼1条','姜片适量','葱丝适量','蒸鱼豉油少许'],steps:['鱼身划刀塞入姜片','水开后蒸8-10分钟','倒掉盘中水铺葱丝淋豉油浇热油'],cuisine:'粤菜',tags:['低脂','高蛋白']},
+dinner:{name:'白灼菜心',calories:'150kcal',time:'8分钟',ingredients:['菜心250g','蒜末适量','蒸鱼豉油少许'],steps:['菜心焯水1分钟捞出摆盘','撒蒜末淋蒸鱼豉油','浇少许热油'],cuisine:'粤菜',tags:['清淡','低卡']}
 },
 news:{
 hot:[
@@ -1121,6 +1156,7 @@ function renderSport(){
       </div>
       <div style="font-size:13px;color:var(--text-2);margin-top:6px">${esc(e.desc||'')}</div>
       ${e.tips?`<div style="font-size:12px;color:var(--primary);margin-top:8px;padding:6px 10px;background:#FFF8F5;border-radius:6px">💡 ${esc(e.tips)}</div>`:''}
+      <button class="video-btn" onclick="openVideo('${esc(e.name)}运动教学')">▶ 视频教学</button>
     </div></div>`;
   });
   h+=`<div class="disclaimer">运动前请充分热身，量力而行，注意安全</div>`;
@@ -1129,20 +1165,31 @@ function renderSport(){
 }
 
 //=================== ENGLISH ===================
+var speechSynth=window.speechSynthesis;
+var speaking=false;
+function speak(text,btn){
+  if(speaking){speechSynth.cancel();speaking=false;if(btn)btn.classList.remove('speaking');return}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US';u.rate=0.85;u.pitch=1;
+  u.onstart=()=>{speaking=true;if(btn)btn.classList.add('speaking')};
+  u.onend=u.onerror=()=>{speaking=false;if(btn)btn.classList.remove('speaking')};
+  speechSynth.speak(u);
+}
 function renderEnglish(){
   const d=getD();
   let e=d.english;
   if(!e){e=FALLBACK.english}
   let h=`<div class="section-title">📖 英语学习</div>
-    <div class="section-sub">每日10句日常短语 + 5个核心词汇</div>
+    <div class="section-sub">每日10句日常短语 + 5个核心词汇 · 点击 🔊 听发音</div>
     <div class="tabs"><div class="tab active" data-et="phrases">💬 日常短语</div><div class="tab" data-et="words">📚 核心词汇</div></div>
     <div id="enPhrases"></div><div id="enWords" style="display:none"></div>`;
   $('#english').innerHTML=h;
   const ps=e.phrases||[];
   let ph='';
   ps.forEach((p,i)=>{
-    ph+=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div style="flex:1"><div style="font-size:16px;font-weight:600;color:var(--secondary)">${esc(p.en)}</div>
+    ph+=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+      <div style="flex:1"><div class="speak-row"><span style="font-size:16px;font-weight:600;color:var(--secondary)">${esc(p.en)}</span>
+      <button class="speak-btn" onclick="speak('${esc(p.en).replace(/'/g,"\\'")}',this)" title="朗读">🔊</button></div>
       <div style="font-size:14px;margin-top:4px">${esc(p.zh)}</div></div>
       ${p.scene?`<span class="badge badge-gray">${esc(p.scene)}</span>`:''}</div></div>`;
   });
@@ -1152,8 +1199,9 @@ function renderEnglish(){
   ws.forEach(w=>{
     wh+=`<div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <div><span style="font-size:18px;font-weight:700;color:var(--primary)">${esc(w.en)}</span>
-        ${w.phonetic?`<span style="font-size:13px;color:var(--text-3);margin-left:8px">/${esc(w.phonetic)}/</span>`:''}</div>
+        <div class="speak-row"><span style="font-size:18px;font-weight:700;color:var(--primary)">${esc(w.en)}</span>
+        ${w.phonetic?`<span style="font-size:13px;color:var(--text-3);margin-left:8px">/${esc(w.phonetic)}/</span>`:''}
+        <button class="speak-btn" onclick="speak('${esc(w.en).replace(/'/g,"\\'")}',this)" title="朗读">🔊</button></div>
       </div>
       <div style="font-size:14px;margin:6px 0">${esc(w.zh)}</div>
       ${w.example?`<div style="font-size:13px;color:var(--text-2);padding:8px;background:var(--bg);border-radius:6px;margin-top:6px">📝 ${esc(w.example)}</div>`:''}
@@ -1177,7 +1225,8 @@ function renderDiet(){
   let dt=d.diet;
   if(!dt){dt=FALLBACK.diet}
   const meals=[['breakfast','早餐','meal-breakfast'],['lunch','午餐','meal-lunch'],['dinner','晚餐','meal-dinner']];
-  let h=`<div class="section-title">🥗 健康饮食</div><div class="section-sub">今日三餐健康菜谱推荐</div>`;
+  const cuisineMap={'粤菜':'cuisine-yue','川菜':'cuisine-chuan','家常菜':'cuisine-home'};
+  let h=`<div class="section-title">🥗 健康饮食</div><div class="section-sub">今日三餐健康菜谱推荐 · 粤菜/川菜/家常菜</div>`;
   let total=0;
   meals.forEach(([key,label,cls])=>{
     const m=dt[key];
@@ -1185,10 +1234,14 @@ function renderDiet(){
     const cal=parseInt(m.calories)||0;total+=cal;
     let ing=(m.ingredients||[]).map(i=>`<span class="tag">${esc(i)}</span>`).join('');
     let st=(m.steps||[]).map(s=>`<li>${esc(s)}</li>`).join('');
+    const cuisine=m.cuisine||'';
+    const cuisineCls=cuisineMap[cuisine]||'';
+    const tags=(m.tags||[]).map(t=>`<span class="badge badge-gray">${esc(t)}</span>`).join('');
     h+=`<div class="meal-card ${cls}">
-      <div class="meal-label">${label}</div>
+      <div class="meal-label">${label}${cuisine?` · <span class="cuisine-tag ${cuisineCls}">${esc(cuisine)}</span>`:''}</div>
       <div class="meal-name">${esc(m.name)}</div>
       <div class="meal-meta">🔥 ${esc(m.calories||'')} | ⏱ ${esc(m.time||'')}</div>
+      ${tags?`<div style="margin:4px 0">${tags}</div>`:''}
       <div style="margin:8px 0"><div style="font-size:12px;color:var(--text-2);margin-bottom:4px">食材：</div>${ing}</div>
       <div><div style="font-size:12px;color:var(--text-2);margin-bottom:4px">步骤：</div><ol class="meal-steps">${st}</ol></div>
     </div>`;
@@ -1467,6 +1520,36 @@ function renderManagement(){
   });
   $('#management').innerHTML=h;
 }
+
+//=================== VIDEO ===================
+function openVideo(query){
+  const platforms=[
+    {name:'B站 (Bilibili)',icon:'📺',color:'#FB7299',url:`https://search.bilibili.com/all?keyword=${encodeURIComponent(query)}`},
+    {name:'YouTube',icon:'▶️',color:'#FF0000',url:`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`},
+    {name:'抖音',icon:'🎵',color:'#000000',url:`https://www.douyin.com/search/${encodeURIComponent(query)}`},
+    {name:'Keep (健身App)',icon:'💪',color:'#24C76C',url:`https://www.gotokeep.com/search?q=${encodeURIComponent(query)}`},
+  ];
+  const h=`<div class="video-modal" onclick="if(event.target===this)closeVideo()">
+    <div class="video-modal-inner">
+      <div class="video-modal-head">
+        <h3>🎬 ${esc(query)}</h3>
+        <button class="video-modal-close" onclick="closeVideo()">×</button>
+      </div>
+      <div class="video-modal-body">
+        <div style="font-size:13px;color:var(--text-2);margin-bottom:12px">选择以下平台搜索教学视频：</div>
+        ${platforms.map(p=>`<a href="${p.url}" target="_blank" rel="noopener" class="video-link">
+          <div class="video-link-icon" style="background:${p.color}20;color:${p.color}">${p.icon}</div>
+          <div style="flex:1"><div style="font-weight:600;font-size:14px">${p.name}</div><div style="font-size:11px;color:var(--text-3)">搜索「${esc(query)}」</div></div>
+          <span style="color:var(--text-3)">→</span>
+        </a>`).join('')}
+      </div>
+    </div>
+  </div>`;
+  const modal=document.createElement('div');
+  modal.id='videoModal';modal.innerHTML=h;
+  document.body.appendChild(modal);
+}
+function closeVideo(){const m=document.getElementById('videoModal');if(m)m.remove()}
 
 //=================== PWA ===================
 function initPWA(){
